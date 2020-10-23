@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="mx-auto">
+                    <h6 class="text-secondary">{{ctrl.advertisement.start | date:'yyyy-MM-dd HH:mm'}}</h6>
+                    <h6 class="text-secondary">{{ctrl.advertisement.city}}</h6>
+                </div>
+            </div>
+            <div class="col-md-offset-5 col-md-6">
+                <div class="mx-auto" >
+                    <h3 class="text-center">{{ctrl.advertisement.title}}</h3>
+                </div>
+            </div>
+            <div class="col-md-offset-5 col-md-3">
+                <div class="mx-auto" ng-if="authenticated">
+                    <h6 class="text-success text-right">Ogłaszający: {{ctrl.advertisement.userFirstName}}</h6>
+                    <h6 class="text-success text-right">Tel: {{ctrl.advertisement.userPhoneNumber}}</h6>
+                    <h6 class="text-success text-right">Email: {{ctrl.advertisement.userEmail}}</h6>
+                </div>
+                <div ng-if="!authenticated">
+                    <h6 class="text-success text-right">Dane kontatkowe dostępne po zalogowaniu</h6>
+                    <div class="row">
+                        <div class="mx-auto">
+                            <a class="btn btn-success"  ng-href="#!user-login">Zaloguj się</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="mx-auto">
+            <h3 class="mx-auto">Opis:</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mx-auto">
+            <h5>{{ctrl.advertisement.description}}</h5>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="mx-auto">
+            <h3 >Zdjęcia: </h3>
+        </div>
+    </div>
+    <br>
+    <div ng-repeat="image in ctrl.images">
+        <div class="row">
+            <div class="mx-auto d-inline-block">
+                <img ng-src="{{image}}" width="500" height="300">
+            </div>
+        </div>
+        <br>
+    </div>
+</div>

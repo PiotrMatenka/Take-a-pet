@@ -1,0 +1,86 @@
+<div class="container">
+    <div class="row">
+        <div class="mx-auto">
+            <h2 ng-if="ctrl.user.id">Edycja użytkownika</h2>
+            <h2 ng-if="!ctrl.user.id">Nowy użytkownik</h2>
+        </div>
+    </div>
+    <div class="row" ng-if="ctrl.msg">
+        <div class="mx-auto">
+            <p class="text-danger">{{ctrl.msg}}</p>
+        </div>
+    </div>
+    <form name="userForm" ng-class="{'form-error':submitted}" ng-submit="saveUser()">
+        <div class="row">
+            <div class="mx-auto col-10 col-md-6">
+
+                <div class="form-group">
+                    <label for="firstNameInput">Imię:</label>
+                    <div class="flex-container">
+                        <input type="text" name="firstName" class="form-control" id="firstNameInput" placeholder="imię" required ng-model="ctrl.user.firstName">
+                        <div class="check" ng-show="userForm.firstName.$valid">  ✓</div>
+                    </div>
+                </div>
+                <div ng-messages="userForm.firstName.$error"
+                     ng-show="submitted && userForm.firstName.$invalid" class="error-messages">
+                    <p ng-message="required">Prosimy podać imię!</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastNameInput">Nazwisko:</label>
+                    <div class="flex-container">
+                        <input type="text" name="lastName" class="form-control" id="lastNameInput" placeholder="nazwisko" required ng-model="ctrl.user.lastName">
+                        <div class="check" ng-show="userForm.lastName.$valid">  ✓</div>
+                    </div>
+                </div>
+                <div ng-messages="userForm.lastName.$error"
+                     ng-show="submitted && userForm.lastName.$invalid" class="error-messages">
+                    <p ng-message="required">Prosimy podać nazwisko!</p>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumberInput">Nr telefonu: </label>
+                    <div class="flex-container">
+                        <input type="text" name="phoneNumber" class="form-control" id="phoneNumberInput" placeholder="telefon" required minlength="9" ng-model="ctrl.user.phoneNumber">
+                        <div class="check" ng-show="userForm.phoneNumber.$valid">  ✓</div>
+                    </div>
+                </div>
+                <div ng-messages="userForm.phoneNumber.$error"
+                     ng-show="submitted && userForm.phoneNumber.$invalid" class="error-messages">
+                    <p ng-message="required">Prosimy podać numer telefonu!</p>
+                    <p ng-message="minlength">Numer musi posiadać 9 cyfr</p>
+                </div>
+
+                <div class="form-group" >
+                    <label for="emailInput">Email:</label>
+                    <div class="flex-container">
+                        <input type="email" name="email" class="form-control" id="emailInput" placeholder="email" required ng-model="ctrl.user.email">
+                        <div class="check" ng-show="userForm.email.$valid">  ✓</div>
+                    </div>
+                </div>
+                <div ng-messages="userForm.email.$error"
+                     ng-show="submitted && userForm.email.$invalid" class="error-messages">
+                    <p ng-message="email">Błędny email!</p>
+                    <p ng-message="required">Prosimy podać adres email!</p>
+                </div>
+
+                <div class="form-group" ng-show="!ctrl.user.id">
+                    <label for="passwordInput">Hasło:</label>
+                    <div class="flex-container" >
+                        <input type="password" name="password" class="form-control" id="passwordInput" placeholder="hasło" required ng-model="ctrl.user.password">
+                        <div class="check" ng-show="userForm.password.$valid">  ✓</div>
+                    </div>
+                </div>
+                <div ng-messages="userForm.password.$error"
+                     ng-show="submitted && userForm.password.$invalid" class="error-messages">
+                    <p ng-message="required">Prosimy podać hasło do konta!</p>
+                </div>
+
+                <div class="form-group">
+                    <button ng-if="!ctrl.user.id" type="submit" class="btn btn-primary" ng-click="ctrl.saveUser()">Zapisz</button>
+                    <button ng-if="ctrl.user.id" type="submit" class="btn btn-primary" ng-click="ctrl.updateUser()">Aktualizuj</button>
+                    <button ng-if="ctrl.user.id" type="submit" class="btn btn-danger" ng-click="ctrl.removeUser()">Usuń</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

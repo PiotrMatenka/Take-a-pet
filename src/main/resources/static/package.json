@@ -1,0 +1,15 @@
+{
+  "name": "animals",
+  "version": "1.0.0",
+  "description": "page for animals",
+  "main": "index.js",
+  "author": "Piotron2000",
+  "license": "MIT",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "angular": "^1.7.9",
+    "angular-messages": "^1.7.9",
+    "angular-resource": "^1.7.9",
+    "angular-route": "^1.7.9"
+  }
+}

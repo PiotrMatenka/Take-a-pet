@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html data-ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Take-a-pet</title>
+    <link rel="icon" type="image/png" href="img/images.png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <!-- Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <!--Angular-->
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/angular-messages/angular-messages.js"></script>
+    <script src="node_modules/angular-route/angular-route.js"></script>
+    <script src="node_modules/angular-resource/angular-resource.js"></script>
+    <!--Application-->
+    <script src="app/components/index.js"></script>
+    <script src="app/components/config.js"></script>
+
+    <script src="app/services/userServices.js"></script>
+    <script src="app/services/authService.js"></script>
+    <script src="app/services/advertisementService.js"></script>
+    <script src="app/services/categoryServices.js"></script>
+    <script src="app/services/imagesServices.js"></script>
+
+    <script src="app/components/users/userAdd/UserEditController.js"></script>
+    <script src="app/components/users/userList/UserListController.js"></script>
+    <script src="app/components/users/userLogin/loginController.js"></script>
+    <script src="app/components/advertisements/add/AdvertisementAddController.js"></script>
+    <script src="app/components/home/HomeController.js"></script>
+    <script src="app/components/advertisements/listByCategory/ListController.js"></script>
+    <script src="app/components/advertisements/view/AdverViewController.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="#"><i class="fa fa-paw" aria-hidden="true"></i>
+        Take-a-pet</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-asset">
+                <a class="nav-link" href="#!ads/new">Nowe zlecenie</a>
+            </li>
+            <li class="nav-login" ng-show="!authenticated">
+                <a class="nav-link" href="#!user-login">Zaloguj</a>
+            </li>
+            <li class="nav-login" ng-show="authenticated">
+                <a class="nav-link" href="#!user-login">Wyloguj</a>
+            </li>
+            <li class="nav-register" ng-show="!authenticated">
+                <a class="nav-link" href="#!user-add">Zarejestruj</a>
+            </li>
+            <li ng-show="authenticated">
+                <a class="nav-link" href="#!account"><i class="fas fa-user-tie"></i> Twoje konto</a>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+<main role="main" class="container" >
+    <div class="jumbotron jumbo-custom text-center my-2 " >
+    </div>
+    <div class="row">
+        <div class="mx-auto">
+            <h1>Take-a-pet</h1>
+        </div>
+    </div>
+</main>
+<div ng-view ></div>
+<footer id="sticky-footer" class="py-4 text-black-50">
+    <div class="container text-center">
+        <small>Copyright &copy; piotrmatenka@gmail.com</small>
+    </div>
+</footer>
+</body>
+</html>

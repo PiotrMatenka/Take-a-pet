@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row" ng-show="errmsg">
+        <div class="mx-auto">
+            <p class="text-danger">{{errmsg}}</p>
+        </div>
+    </div>
+    <div class="row">
+                <div class="col-sm-1 col-md-5">
+                    <div ng-show="!authenticated">
+                        <h1>Logowanie: </h1>
+                        <br>
+                        <br>
+                        <form name="form" ng-submit="ctrl.login()" role="form">
+                            <div class="form-group">
+                                <p>Login/email: </p>
+                                <input type="email" ng-model="ctrl.credentials.email" placeholder="email">
+                            </div>
+                            <div class="form-group">
+                                <p>Hasło: </p>
+                                <input type="password" placeholder="hasło" ng-model="ctrl.credentials.password">
+                            </div>
+                            <div class="form-group">
+                                <div>
+                                    <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || ctrl.dataLoading" >Zaloguj</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-offset-3 col-md-4">
+                    <div class="mx-right" ng-show="!authenticated">
+                        <h4>Nie masz konta?</h4>
+                        <br>
+                        <a class="btn btn-dark" ng-href="#!user-add">Zarejestruj się</a>
+                    </div>
+                </div>
+            <div class="form-group">
+                <div class="mx-auto">
+                    <div ng-show="authenticated">
+                        <h2> Czy na pewno chcesz się wylogować?</h2>
+                        <a href="/"ng-click="ctrl.logout()" class="btn btn-primary">Wyloguj</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

@@ -1,0 +1,15 @@
+.jumbo-custom{
+    background: url('../img/kot baner.jpeg') center;
+    width: 1080px;
+    height: 300px;
+}
+.form-error input.ng-invalid {
+    border-color:red;
+}
+.error-messages {
+    color:red;
+}
+.flex-container{
+    display: flex;
+}
+
