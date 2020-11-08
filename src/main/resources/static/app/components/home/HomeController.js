@@ -1,7 +1,9 @@
 angular.module('app')
-.controller("HomeController", function (CategoryService, AdvertisementService, AuthService, $scope){
+.controller("HomeController", function (CategoryService, AdvertisementService, $cookies, UserService){
     const vm = this;
-    $scope.user = AuthService.user;
+    vm.userEmail = $cookies.get("user");
+    vm.user = UserService.getByEmail(vm.userEmail);
+
     vm.categories = CategoryService.getAll();
 
     vm.search = title => {

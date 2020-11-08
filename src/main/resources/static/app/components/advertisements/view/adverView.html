@@ -13,12 +13,12 @@
                 </div>
             </div>
             <div class="col-md-offset-5 col-md-3">
-                <div class="mx-auto" ng-if="authenticated">
+                <div class="mx-auto" ng-if="ctrl.userEmail">
                     <h6 class="text-success text-right">Ogłaszający: {{ctrl.advertisement.userFirstName}}</h6>
                     <h6 class="text-success text-right">Tel: {{ctrl.advertisement.userPhoneNumber}}</h6>
                     <h6 class="text-success text-right">Email: {{ctrl.advertisement.userEmail}}</h6>
                 </div>
-                <div ng-if="!authenticated">
+                <div ng-if="!ctrl.userEmail">
                     <h6 class="text-success text-right">Dane kontatkowe dostępne po zalogowaniu</h6>
                     <div class="row">
                         <div class="mx-auto">

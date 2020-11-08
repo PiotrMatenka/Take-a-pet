@@ -27,8 +27,13 @@ angular.module('app')
             controllerAs: 'ctrl'
         })
         .when('/user-login',{
-            templateUrl: 'app/components/users/userLogin/loginJwt.html',
-            controller: 'LoginController',
+            templateUrl: 'app/components/users/userLogin/login.html',
+            controller: 'AuthenticationController',
+            controllerAs: 'ctrl'
+        })
+        .when('/user-logout', {
+            templateUrl: 'app/components/users/userLogin/login.html',
+            controller: 'AuthenticationController',
             controllerAs: 'ctrl'
         })
         .when('/home', {
@@ -44,6 +49,11 @@ angular.module('app')
         .when('/ads/view/:adverId', {
             templateUrl: 'app/components/advertisements/view/adverView.html',
             controller: 'AdverViewController',
+            controllerAs: 'ctrl'
+        })
+        .when('/accountView/:id', {
+            templateUrl: 'app/components/users/account/accountView.html',
+            controller: 'AccountController',
             controllerAs: 'ctrl'
         })
         .otherwise({

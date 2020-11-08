@@ -8,8 +8,10 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",
     "angular": "^1.7.9",
+    "angular-cookies": "^1.8.2",
     "angular-messages": "^1.7.9",
     "angular-resource": "^1.7.9",
-    "angular-route": "^1.7.9"
+    "angular-route": "^1.7.9",
+    "ngstorage": "^0.3.11"
   }
 }

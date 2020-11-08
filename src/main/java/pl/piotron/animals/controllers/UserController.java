@@ -39,6 +39,12 @@ public class UserController {
                 .map(ResponseEntity::ok)
                 .orElseThrow(UserNotFoundException::new);
     }
+
+    @GetMapping("/byEmail/{email}")
+    public ResponseEntity<UserDto> findUserByEmail(@PathVariable String email)
+    {
+        return ResponseEntity.ok(userService.findByEmail(email));
+    }
     @GetMapping("/{id}/advertisements")
     public List<ImageAdvertisementDto> getUserAdvertisements (@PathVariable Long id)
     {

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.piotron.animals.exceptions.DuplicateImageException;
 import pl.piotron.animals.exceptions.FileExtensionException;
 import pl.piotron.animals.services.ImagesService;
 
@@ -26,6 +27,11 @@ public class ImageUploadController {
         }catch (FileExtensionException e)
         {
             model.addAttribute("errorMessage", "Błędne rozszerzenie lub brak wybranego pliku");
+            return "imagesAdd";
+        }
+        catch (DuplicateImageException e)
+        {
+            model.addAttribute("errorMessage", "Zdjęcie juz istnieje");
             return "imagesAdd";
         }
     }

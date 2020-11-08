@@ -1,18 +1,21 @@
 angular.module('app')
-    .controller('AuthenticationController', function($rootScope, $location, AuthenticationService) {
+    .controller('AuthenticationController', function($rootScope, $location, AuthenticationService, $cookies) {
         var vm = this;
         vm.credentials = {};
+        vm.userEmail = $cookies.get("user");
 
         var loginSuccess = function() {
-            $rootScope.authenticated = true;
-            $location.path('/');
+
+            location.reload();
         };
         vm.login = () => {
             AuthenticationService.authenticate(vm.credentials, loginSuccess)
+            $location.path('/');
+
         };
 
         var logoutSuccess = function(response) {
-            $rootScope.authenticated = false;
+            location.reload();
             $location.path('/');
         };
         vm.logout = function() {

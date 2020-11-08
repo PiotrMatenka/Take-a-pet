@@ -19,25 +19,28 @@
     <script src="node_modules/angular-messages/angular-messages.js"></script>
     <script src="node_modules/angular-route/angular-route.js"></script>
     <script src="node_modules/angular-resource/angular-resource.js"></script>
+    <script src="node_modules/ngstorage/ngStorage.min.js"></script>
+    <script src="node_modules/angular-cookies/angular-cookies.min.js"></script>
     <!--Application-->
     <script src="app/components/index.js"></script>
     <script src="app/components/config.js"></script>
 
     <script src="app/services/userServices.js"></script>
-    <script src="app/services/authService.js"></script>
+    <script src="app/services/authenticationService.js"></script>
     <script src="app/services/advertisementService.js"></script>
     <script src="app/services/categoryServices.js"></script>
     <script src="app/services/imagesServices.js"></script>
 
     <script src="app/components/users/userAdd/UserEditController.js"></script>
     <script src="app/components/users/userList/UserListController.js"></script>
-    <script src="app/components/users/userLogin/loginController.js"></script>
+    <script src="app/components/users/userLogin/authenticationController.js"></script>
     <script src="app/components/advertisements/add/AdvertisementAddController.js"></script>
     <script src="app/components/home/HomeController.js"></script>
     <script src="app/components/advertisements/listByCategory/ListController.js"></script>
     <script src="app/components/advertisements/view/AdverViewController.js"></script>
+    <script src="app/components/users/account/accountController.js"></script>
 </head>
-<body>
+<body ng-controller="HomeController as ctrl">
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <a class="navbar-brand" href="#"><i class="fa fa-paw" aria-hidden="true"></i>
         Take-a-pet</a>
@@ -49,17 +52,17 @@
             <li class="nav-asset">
                 <a class="nav-link" href="#!ads/new">Nowe zlecenie</a>
             </li>
-            <li class="nav-login" ng-show="!authenticated">
+            <li class="nav-login" ng-if="!ctrl.userEmail">
                 <a class="nav-link" href="#!user-login">Zaloguj</a>
             </li>
-            <li class="nav-login" ng-show="authenticated">
+            <li class="nav-login" ng-show="ctrl.userEmail">
                 <a class="nav-link" href="#!user-login">Wyloguj</a>
             </li>
-            <li class="nav-register" ng-show="!authenticated">
+            <li class="nav-register" ng-show="!ctrl.userEmail">
                 <a class="nav-link" href="#!user-add">Zarejestruj</a>
             </li>
-            <li ng-show="authenticated">
-                <a class="nav-link" href="#!account"><i class="fas fa-user-tie"></i> Twoje konto</a>
+            <li class="nav-account" ng-if="ctrl.userEmail">
+                <a class="nav-link" href="#!accountView/{{ctrl.user.id}}"><i class="fas fa-user-tie"></i>{{ctrl.userEmail}}</a>
             </li>
         </ul>
 

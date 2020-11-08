@@ -4,6 +4,8 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import pl.piotron.animals.exceptions.AppException;
+import pl.piotron.animals.exceptions.DuplicateImageException;
 import pl.piotron.animals.exceptions.FileExtensionException;
 import pl.piotron.animals.model.Advertisement;
 import pl.piotron.animals.model.ImageStorage;
@@ -22,13 +24,13 @@ public class ImagesService {
     private final ImageRepository imageRepository;
     private String uploadUrl;
     private final AdvertisementRepository advertisementRepository;
-    private final String UPLOAD_DIR = "/JAVA/animals/src/main/resources/static/upload-dir/";
+    private final String UPLOAD_DIR = "/JAVA/take a pet/src/main/resources/static/upload-dir/";
 
     public ImagesService(ImageRepository imageRepository, AdvertisementRepository advertisementRepository) {
         this.imageRepository = imageRepository;
         this.advertisementRepository = advertisementRepository;
     }
-    public void storeImage(MultipartFile file, Long advertisementId)
+    public void storeImage(MultipartFile file, Long advertisementId) throws DuplicateImageException
     {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         String fileExtension = fileName.substring(fileName.lastIndexOf(".")+1);
@@ -39,9 +41,13 @@ public class ImagesService {
             throw new FileExtensionException();
         }
         uploadUrl = "../upload-dir/"+advertisementId+"/"+fileName;
+        Optional<ImageStorage> imageByUrl = imageRepository.findByUploadUrl(uploadUrl);
+        if (imageByUrl.isPresent())
+            throw new DuplicateImageException();
         ImageStorage imageStorage = mapToEntity(file, advertisementId);
         uploadImage(file, advertisementId);
         imageRepository.save(imageStorage);
+
     }
     public List<ImageStorage> getAll ()
     {

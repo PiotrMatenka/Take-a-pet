@@ -30,6 +30,11 @@ public class UserService {
         return userRepository.findById(id).map(userMapper::userDto);
     }
 
+    public UserDto findByEmail (String email)
+    {
+        return userMapper.userDto(userRepository.findByEmail(email));
+    }
+
     public List<UserDto> findAll()
     {
         return userRepository.findAll().stream().map(userMapper::userDto).collect(Collectors.toList());

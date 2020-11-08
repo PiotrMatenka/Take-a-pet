@@ -1,10 +1,10 @@
 insert into user(id, first_name, last_name, email, password, phone_Number) values
-(1, 'Andżej', 'Andżejewski', 'andzej@wp.pl', 'eeeee', '364125987' ),
-(2, 'Justyna','Toona',  'justynka@wp.pl', 'costam1234', '145876984'),
-(3, 'Piotron', 'Tojaa', 'piotron2000@wp.pl', 'niewiem', '136987451'),
-(4, 'Jan', 'Kowalski', 'jankowalski@wp.pl', 'jan', '478936541'),
-(5, 'Zygfryd', 'DeLowe', 'krzyzacy@onet.pl', 'zigi', '123645872'),
-(6, 'Andżelika', 'Andżelewska', 'andzela@gmail.com', 'lili', '253147895');
+(1, 'Andżej', 'Andżejewski', 'andzej@wp.pl', '{noop}eeeee', '364125987' ),
+(2, 'Justyna','Toona',  'justynka@wp.pl', '{noop}costam1234', '145876984'),
+(3, 'Piotron', 'Tojaa', 'piotron2000@wp.pl', '{noop}niewiem', '136987451'),
+(4, 'Jan', 'Kowalski', 'jankowalski@wp.pl', '{noop}jan', '478936541'),
+(5, 'Zygfryd', 'DeLowe', 'krzyzacy@onet.pl', '{noop}zigi', '123645872'),
+(6, 'Andżelika', 'Andżelewska', 'andzela@gmail.com', '{noop}lili', '253147895');
 
 insert into category (id, name, image_url) values
 (1, 'Gady', '../img/categories/reptiles.png'),

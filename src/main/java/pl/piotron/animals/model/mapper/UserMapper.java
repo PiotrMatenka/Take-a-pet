@@ -10,10 +10,12 @@ import pl.piotron.animals.repositories.UserRoleRepository;
 @Service
 public class UserMapper {
     private final UserRoleRepository userRoleRepository;
+    private PasswordEncoder encoder;
     private static final String DEFAULT_ROLE=  "USER";
 
 
-    public UserMapper( UserRoleRepository userRoleRepository) {
+    public UserMapper( UserRoleRepository userRoleRepository, PasswordEncoder encoder) {
+        this.encoder = encoder;
         this.userRoleRepository = userRoleRepository;
     }
 
@@ -24,7 +26,8 @@ public class UserMapper {
         dto.setLastName(user.getLastName());
         dto.setEmail(user.getEmail());
         dto.setPhoneNumber(user.getPhoneNumber());
-        dto.setPassword(user.getPassword());
+        String password = encoder.encode(user.getPassword());
+        dto.setPassword(password);
         dto.setRoles(user.getRoles());
         return dto;
     }
@@ -34,7 +37,8 @@ public class UserMapper {
         entity.setFirstName(user.getFirstName());
         entity.setLastName(user.getLastName());
         entity.setEmail(user.getEmail());
-        entity.setPassword(user.getPassword());
+        String password = encoder.encode(user.getPassword());
+        entity.setPassword(password);
         entity.setPhoneNumber(user.getPhoneNumber());
         UserRole defaultRole = userRoleRepository.findByRole(DEFAULT_ROLE);
         user.getRoles().add(defaultRole);
