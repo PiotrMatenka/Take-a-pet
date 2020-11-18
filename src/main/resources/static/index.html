@@ -39,6 +39,7 @@
     <script src="app/components/advertisements/listByCategory/ListController.js"></script>
     <script src="app/components/advertisements/view/AdverViewController.js"></script>
     <script src="app/components/users/account/accountController.js"></script>
+    <script src="app/components/users/account/archiveAdvertisements/archivesController.js"></script>
 </head>
 <body ng-controller="HomeController as ctrl">
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
@@ -49,8 +50,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-asset">
-                <a class="nav-link" href="#!ads/new">Nowe zlecenie</a>
+            <li class="nav-asset" ng-show="ctrl.userEmail">
+                <a class="nav-link" href="#!ads/new/{{ctrl.user.id}}">Dodaj ogłoszenie</a>
             </li>
             <li class="nav-login" ng-if="!ctrl.userEmail">
                 <a class="nav-link" href="#!user-login">Zaloguj</a>
@@ -62,7 +63,7 @@
                 <a class="nav-link" href="#!user-add">Zarejestruj</a>
             </li>
             <li class="nav-account" ng-if="ctrl.userEmail">
-                <a class="nav-link" href="#!accountView/{{ctrl.user.id}}"><i class="fas fa-user-tie"></i>{{ctrl.userEmail}}</a>
+                <a class="nav-link" href="#!accountView/{{ctrl.user.id}}"><i class="fas fa-user-tie"></i> {{ctrl.userEmail}}</a>
             </li>
         </ul>
 

@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,46 +22,50 @@ import pl.piotron.animals.repositories.UserRepository;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private UserRepository userRepository;
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsServiceBean());
-    }
+        @Autowired
+        private UserRepository userRepository;
 
-    @Bean
-    public PasswordEncoder passwordEncoder()
-    {
-        PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        return passwordEncoder;
-    }
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            auth.userDetailsService(userDetailsServiceBean());
+        }
 
-    @Override
-    public UserDetailsService userDetailsServiceBean() throws Exception {
-        return new CustomUserDetails(userRepository);
-    }
+        @Bean
+        public PasswordEncoder passwordEncoder()
+        {
+            PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+            return passwordEncoder;
+        }
+
+        @Override
+        public UserDetailsService userDetailsServiceBean() throws Exception {
+            return new CustomUserDetails(userRepository);
+        }
 
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .httpBasic().and()
-                .logout().logoutUrl("/user-logout")
-                .deleteCookies("user")
-                .invalidateHttpSession(true)
-                .and()
-                .csrf()
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
-                .authorizeRequests()
-                .antMatchers("/","/api/**","/home", "/index.html", "/user-login",
-                        "/app/components/**", "/node_modules/**", "/img/**", "/css/**",
-                        "/app/services/**", "/upload-dir/**", "/upload/**", "/ads/**")
-                .permitAll()
-                .anyRequest().authenticated()
-                .and().formLogin().loginPage("/#!/user-login").permitAll()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .httpBasic().and()
+                    .logout().logoutUrl("/user-logout")
+                    .deleteCookies("user")
+                    .invalidateHttpSession(true)
+                    .and()
+                    .csrf()
+                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
+                    .authorizeRequests()
+                    .antMatchers("/","/api/**","/home", "/index.html", "/user-login",
+                            "/app/components/**", "/node_modules/**", "/img/**", "/css/**",
+                            "/app/services/**", "/upload-dir/**", "/upload/**", "/ads/**")
+                    .permitAll()
+                    .antMatchers("/#!/ads/new", "/#!/ads/edit").fullyAuthenticated()
+                    .anyRequest().authenticated()
+                    .and().formLogin().loginPage("/#!/user-login").permitAll()
+                    .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
 
-        ;
-    }
+            ;
+        }
 }
+
+

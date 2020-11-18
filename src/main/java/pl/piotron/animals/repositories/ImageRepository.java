@@ -10,5 +10,7 @@ import java.util.Optional;
 public interface ImageRepository extends JpaRepository<ImageStorage, Long> {
     List<ImageStorage> findAllByAdvertisement_Id(Long id);
     Optional<ImageStorage> findByUploadUrl (String url);
+    ImageStorage findFirstByAdvertisement_Id (Long id);
 
 }
+

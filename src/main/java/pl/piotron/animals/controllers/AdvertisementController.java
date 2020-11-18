@@ -64,6 +64,8 @@ public class AdvertisementController {
                 .map(ResponseEntity::ok)
                 .orElseThrow(AdvertisementNotFoundException::new);
     }
+
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping("")
     public ResponseEntity<AdvertisementDto> createAdvertisement(@Valid @RequestBody AdvertisementDto advertisement)
     {
@@ -83,6 +85,7 @@ public class AdvertisementController {
         return ResponseEntity.created(location).body(savedAdvertisement);
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping("/{id}/end")
     public ResponseEntity finishAdvertisement(@PathVariable Long id)
     {
@@ -90,6 +93,7 @@ public class AdvertisementController {
         return ResponseEntity.accepted().body(endTime);
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PutMapping("/{id}")
     public ResponseEntity updateAdvertisement (@PathVariable Long id, @RequestBody AdvertisementDto dto)
     {

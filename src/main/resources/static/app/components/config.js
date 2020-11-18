@@ -1,7 +1,7 @@
 angular.module('app')
     .config(function ($routeProvider, $httpProvider) {
     $routeProvider
-        .when('/ads/new', {
+        .when('/ads/new/:userId', {
             templateUrl: 'app/components/advertisements/add/adverAdd.html',
             controller: 'AdvertisementAddController',
             controllerAs: 'ctrl'
@@ -54,6 +54,11 @@ angular.module('app')
         .when('/accountView/:id', {
             templateUrl: 'app/components/users/account/accountView.html',
             controller: 'AccountController',
+            controllerAs: 'ctrl'
+        })
+        .when('/archives/:id', {
+            templateUrl: 'app/components/users/account/archiveAdvertisements/archives.html',
+            controller: 'ArchivesController',
             controllerAs: 'ctrl'
         })
         .otherwise({

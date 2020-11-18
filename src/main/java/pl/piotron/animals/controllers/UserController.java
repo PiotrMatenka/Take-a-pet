@@ -3,13 +3,16 @@ package pl.piotron.animals.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.piotron.animals.exceptions.UserNotFoundException;
+import pl.piotron.animals.model.dto.EndedAdvertisementDto;
 import pl.piotron.animals.model.dto.ImageAdvertisementDto;
+import pl.piotron.animals.model.dto.UserAdvertisementDto;
 import pl.piotron.animals.model.dto.UserDto;
 import pl.piotron.animals.services.UserService;
 
@@ -26,12 +29,14 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("")
     public List<UserDto> getAll ()
     {
         return userService.findAll();
     }
 
+    @PreAuthorize("isUser(#id) or hasAuthority('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> findUserById(@PathVariable Long id)
     {
@@ -45,10 +50,19 @@ public class UserController {
     {
         return ResponseEntity.ok(userService.findByEmail(email));
     }
+
+    @PreAuthorize("isUser(#id) or hasAuthority('ADMIN')")
     @GetMapping("/{id}/advertisements")
     public List<ImageAdvertisementDto> getUserAdvertisements (@PathVariable Long id)
     {
         return userService.getUserAdvertisements(id);
+    }
+
+    @PreAuthorize("isUser(#id) or hasAuthority('ADMIN')")
+    @GetMapping("/{id}/advertisements/ended")
+    public List<EndedAdvertisementDto> getEndedAdvertisements (@PathVariable Long id)
+    {
+        return userService.getEndedAdvertisements(id);
     }
 
     @PostMapping("")
@@ -70,6 +84,8 @@ public class UserController {
                 .toUri();
         return ResponseEntity.created(location).body(savedUser);
     }
+
+    @PreAuthorize("isUser(#id) or hasAuthority('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUser (@PathVariable Long id, @RequestBody UserDto user)
     {

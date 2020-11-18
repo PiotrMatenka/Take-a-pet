@@ -40,7 +40,7 @@ public class ImagesService {
         if (!fileExtension.equals("jpg") && !fileExtension.equals("png")){
             throw new FileExtensionException();
         }
-        uploadUrl = "../upload-dir/"+advertisementId+"/"+fileName;
+        uploadUrl = "/upload-dir/"+advertisementId+"/"+fileName;
         Optional<ImageStorage> imageByUrl = imageRepository.findByUploadUrl(uploadUrl);
         if (imageByUrl.isPresent())
             throw new DuplicateImageException();
@@ -64,8 +64,7 @@ public class ImagesService {
 
     public ImageStorage getMainImage(Long adverId)
     {
-        return imageRepository.findAllByAdvertisement_Id(adverId)
-                .get(0);
+        return imageRepository.findFirstByAdvertisement_Id(adverId);
 
     }
 

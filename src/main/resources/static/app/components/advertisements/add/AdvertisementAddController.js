@@ -2,11 +2,14 @@ angular.module('app')
 .controller('AdvertisementAddController', function ($routeParams, AdvertisementService, $location, CategoryService, Advertisement, ImagesService) {
     const vm = this;
     const adverId = $routeParams.adverId;
+    const userId = $routeParams.userId;
+
     if (adverId){
         vm.advertisement = AdvertisementService.get(adverId);
         vm.images = ImagesService.getImagesById(adverId);}
     else
         vm.advertisement = new Advertisement();
+        vm.advertisement.userId = userId;
 
     vm.categories = CategoryService.getAll()
     const saveCallback = () => {
@@ -14,7 +17,6 @@ angular.module('app')
         vm.msg = "Dodano ogłoszenie";
     };
 
-    vm.advertisement.userId = 1;
     const errorCallback = err => {
         vm.msg=`Błąd zapisu: ${err.data.message}`;
     };
@@ -30,4 +32,6 @@ angular.module('app')
             .then(saveCallback)
             .catch(errorCallback);
     }
+
+
 });

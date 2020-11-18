@@ -26,7 +26,7 @@ public class ImageAdvertisementMapper {
             ImageStorage image = imagesService.getMainImage(advertisement.getId());
             dto.setImageId(image.getId());
             dto.setUploadUrl(image.getUploadUrl());
-        }catch (IndexOutOfBoundsException e)
+        }catch (NullPointerException e)
         {
             e.getMessage();
         }

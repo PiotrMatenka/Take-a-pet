@@ -4,9 +4,13 @@ import org.springframework.stereotype.Service;
 import pl.piotron.animals.exceptions.DuplicateEmailException;
 import pl.piotron.animals.exceptions.UserNotFoundException;
 import pl.piotron.animals.model.User;
+import pl.piotron.animals.model.dto.EndedAdvertisementDto;
 import pl.piotron.animals.model.dto.ImageAdvertisementDto;
+import pl.piotron.animals.model.dto.UserAdvertisementDto;
 import pl.piotron.animals.model.dto.UserDto;
+import pl.piotron.animals.model.mapper.EndedAdvertisementMapper;
 import pl.piotron.animals.model.mapper.ImageAdvertisementMapper;
+import pl.piotron.animals.model.mapper.UserAdvertisementMapper;
 import pl.piotron.animals.model.mapper.UserMapper;
 import pl.piotron.animals.repositories.UserRepository;
 
@@ -64,7 +68,19 @@ public class UserService {
                 .map(User::getAdvertisements)
                 .orElseThrow(UserNotFoundException::new)
                 .stream()
+                .filter(a -> a.getEnd() == null)
                 .map(imageAdvertisementMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<EndedAdvertisementDto> getEndedAdvertisements (Long id)
+    {
+        return userRepository.findById(id)
+                .map(User::getAdvertisements)
+                .orElseThrow(UserNotFoundException::new)
+                .stream()
+                .filter(a -> a.getEnd() != null)
+                .map(EndedAdvertisementMapper::toDto)
                 .collect(Collectors.toList());
     }
 
