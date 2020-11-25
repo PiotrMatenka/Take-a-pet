@@ -1,9 +1,11 @@
 package pl.piotron.animals.services;
 
 import org.springframework.stereotype.Service;
+import pl.piotron.animals.exceptions.AppException;
 import pl.piotron.animals.exceptions.DuplicateEmailException;
 import pl.piotron.animals.exceptions.UserNotFoundException;
 import pl.piotron.animals.model.User;
+import pl.piotron.animals.model.UserDetails;
 import pl.piotron.animals.model.dto.EndedAdvertisementDto;
 import pl.piotron.animals.model.dto.ImageAdvertisementDto;
 import pl.piotron.animals.model.dto.UserAdvertisementDto;
@@ -12,6 +14,7 @@ import pl.piotron.animals.model.mapper.EndedAdvertisementMapper;
 import pl.piotron.animals.model.mapper.ImageAdvertisementMapper;
 import pl.piotron.animals.model.mapper.UserAdvertisementMapper;
 import pl.piotron.animals.model.mapper.UserMapper;
+import pl.piotron.animals.repositories.UserDetailsRepository;
 import pl.piotron.animals.repositories.UserRepository;
 
 import java.util.List;
@@ -23,11 +26,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final ImageAdvertisementMapper imageAdvertisementMapper;
+    private final UserDetailsRepository userDetailsRepository;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper, ImageAdvertisementMapper imageAdvertisementMapper) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, ImageAdvertisementMapper imageAdvertisementMapper, UserDetailsRepository userDetailsRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.imageAdvertisementMapper = imageAdvertisementMapper;
+        this.userDetailsRepository  = userDetailsRepository;
     }
     public Optional<UserDto> findById (Long id)
     {
@@ -58,8 +63,8 @@ public class UserService {
     {
         User userByEmail = userRepository.findByEmail(user.getEmail());
         if (userByEmail !=null && !userByEmail.getId().equals(user.getId()))
-            throw new DuplicateEmailException();
-        return mapAndSave(user);
+            throw new AppException("Użytkownik nie istnieje");
+        return updateAndSave(user);
     }
 
     public List<ImageAdvertisementDto> getUserAdvertisements(Long id)
@@ -87,7 +92,17 @@ public class UserService {
     private UserDto mapAndSave(UserDto user)
     {
         User userEntity = userMapper.toEntity(user);
+        UserDetails userDetails = userEntity.getUserDetails();
+        UserDetails savedDetails = userDetailsRepository.save(userDetails);
         User savedUser = userRepository.save(userEntity);
         return userMapper.userDto(savedUser);
     }
+
+    private UserDto updateAndSave (UserDto user)
+    {
+        UserDetails userEntity = userMapper.updateUser(user);
+        UserDetails savedUser = userDetailsRepository.save(userEntity);
+        return userMapper.updatedToDto(savedUser);
+    }
+
 }

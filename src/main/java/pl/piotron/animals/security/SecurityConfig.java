@@ -8,6 +8,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -43,6 +44,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             return new CustomUserDetails(userRepository);
         }
 
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+
+        web.ignoring()
+                // ignoring the "/", "/index.html", "/app/**", "/register",
+                // "/favicon.ico"
+                .antMatchers("/", "/index.html", "/h2-console/**");
+    }
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
@@ -57,9 +66,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                     .antMatchers("/","/api/**","/home", "/index.html", "/user-login",
                             "/app/components/**", "/node_modules/**", "/img/**", "/css/**",
-                            "/app/services/**", "/upload-dir/**", "/upload/**", "/ads/**")
+                            "/app/services/**", "/upload-dir/**", "/upload/**", "/ads/**", "/h2-console/**")
                     .permitAll()
-                    .antMatchers("/#!/ads/new", "/#!/ads/edit").fullyAuthenticated()
+                    .antMatchers("/#!/ads/new", "/#!/ads/edit", "/#!/accountView/**").fullyAuthenticated()
                     .anyRequest().authenticated()
                     .and().formLogin().loginPage("/#!/user-login").permitAll()
                     .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)

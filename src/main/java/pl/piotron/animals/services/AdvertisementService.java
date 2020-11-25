@@ -136,7 +136,7 @@ public class AdvertisementService {
                 Files.delete(Paths.get(i.getDeleteUrl()));
             }catch (IOException e)
             {
-                e.printStackTrace();
+                e.getMessage();
             }
         }
         imageRepository.deleteAll(images);

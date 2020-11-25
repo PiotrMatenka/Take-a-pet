@@ -9,12 +9,16 @@ angular.module('app')
         vm.msg=`Błąd zapisu: ${err.data.message}`;
     };
 
+
     vm.finishAdvertisement = advertisement => {
-        AdvertisementEndService.save(advertisement.id)
-            .then(response => {
-                advertisement.end = response.data;
-                location.reload();
-            })
-            .catch(errorCallback);
-    };
+        if (confirm("Czy na pewno chcesz zakończyć ogłoszenie?")) {
+            AdvertisementEndService.save(advertisement.id)
+                .then(response => {
+                    advertisement.end = response.data;
+                    location.reload();
+                })
+                .catch(errorCallback);
+        }
+        ;
+    }
 })

@@ -40,17 +40,18 @@
                 <div class="form-group">
                     <label for="phoneNumberInput">Nr telefonu: </label>
                     <div class="flex-container">
-                        <input type="text" name="phoneNumber" class="form-control" id="phoneNumberInput" placeholder="telefon" required minlength="9" ng-model="ctrl.user.phoneNumber">
+                        <input type="text" name="phoneNumber" class="form-control" id="phoneNumberInput" placeholder="telefon"
+                               required ng-pattern="/^[0-9]{9,9}$/"  ng-model="ctrl.user.phoneNumber">
                         <div class="check" ng-show="userForm.phoneNumber.$valid">  ✓</div>
                     </div>
                 </div>
                 <div ng-messages="userForm.phoneNumber.$error"
                      ng-show="submitted && userForm.phoneNumber.$invalid" class="error-messages">
                     <p ng-message="required">Prosimy podać numer telefonu!</p>
-                    <p ng-message="minlength">Numer musi posiadać 9 cyfr</p>
+                    <p ng-message="ng-pattern">Numer musi posiadać 9 cyfr</p>
                 </div>
 
-                <div class="form-group" >
+                <div class="form-group" ng-if="!ctrl.user.id">
                     <label for="emailInput">Email:</label>
                     <div class="flex-container">
                         <input type="email" name="email" class="form-control" id="emailInput" placeholder="email" required ng-model="ctrl.user.email">
@@ -63,10 +64,10 @@
                     <p ng-message="required">Prosimy podać adres email!</p>
                 </div>
 
-                <div class="form-group" ng-show="!ctrl.user.id">
+                <div class="form-group" ng-if="!ctrl.user.id">
                     <label for="passwordInput">Hasło:</label>
                     <div class="flex-container" >
-                        <input type="password" name="password" class="form-control" id="passwordInput" placeholder="hasło" required ng-model="ctrl.user.password">
+                        <input type="password" name="password" class="form-control" id="passwordInput" placeholder="hasło"  required ng-model="ctrl.user.password">
                         <div class="check" ng-show="userForm.password.$valid">  ✓</div>
                     </div>
                 </div>

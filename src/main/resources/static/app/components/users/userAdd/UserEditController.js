@@ -9,7 +9,7 @@ angular.module('app')
             vm.user = new User();
 
         const saveCallback = () => {
-            $location.path(`/user-edit/${vm.user.id}`);
+            $location.path(`/user-login/`);
         };
         const errorCallback = err => {
             if (err.status == 409){

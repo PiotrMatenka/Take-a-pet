@@ -58,13 +58,13 @@
                 </div>
             </div>
             <br>
-            <div class="row">
+            <div class="row" ng-if="ctrl.advertisement.id">
                 <h2 class="mx-auto">Zdjęcia: </h2>
             </div>
             <div class="row" ng-if="ctrl.advertisement.id">
                 <div ng-repeat="image in ctrl.images" class="col-md-3 offset-md-1">
                     <div class="row">
-                        <img ng-src="..{{image}}" width="200" height="100" alt="brak zdjęć"/>
+                        <img ng-src="{{image}}" width="200" height="100" alt="brak zdjęć"/>
                         <br>
                     </div>
                 </div>

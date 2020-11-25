@@ -24,7 +24,7 @@ public class ImagesService {
     private final ImageRepository imageRepository;
     private String uploadUrl;
     private final AdvertisementRepository advertisementRepository;
-    private final String UPLOAD_DIR = "/JAVA/take a pet/src/main/resources/static/upload-dir/";
+    private final String UPLOAD_DIR = "/JAVA/Take a pet/src/main/resources/static/upload-dir/";
 
     public ImagesService(ImageRepository imageRepository, AdvertisementRepository advertisementRepository) {
         this.imageRepository = imageRepository;

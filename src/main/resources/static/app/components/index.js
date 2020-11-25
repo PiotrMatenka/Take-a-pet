@@ -1,4 +1,4 @@
 'use strict';
-angular.module('app',['ngRoute', 'ngResource', 'ngMessages', 'ngStorage', 'ngCookies'])
+angular.module('app',['ngRoute', 'ngResource', 'ngMessages','ngCookies'])
 
 

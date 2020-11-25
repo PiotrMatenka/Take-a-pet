@@ -1,10 +1,20 @@
-insert into user(id, first_name, last_name, email, password, phone_Number) values
-(1, 'Andżej', 'Andżejewski', 'andzej@wp.pl', '{noop}eeeee', '364125987' ),
-(2, 'Justyna','Toona',  'justynka@wp.pl', '{noop}costam1234', '145876984'),
-(3, 'Piotron', 'Tojaa', 'piotron2000@wp.pl', '{noop}niewiem', '136987451'),
-(4, 'Jan', 'Kowalski', 'jankowalski@wp.pl', '{noop}jan', '478936541'),
-(5, 'Zygfryd', 'DeLowe', 'krzyzacy@onet.pl', '{noop}zigi', '123645872'),
-(6, 'Andżelika', 'Andżelewska', 'andzela@gmail.com', '{noop}lili', '253147895');
+
+insert into user_details (id,first_name, last_name, phone_Number) values
+(1, 'Andżej', 'Andżejewski','364125987'),
+(2, 'Justyna','Toona','145876984' ),
+(3, 'Piotron', 'Tojaa','136987451'),
+(4, 'Jan', 'Kowalski','478936541'),
+(5, 'Zygfryd', 'DeLowe','123645872'),
+(6, 'Andżelika', 'Andżelewska', '253147895');
+
+
+insert into user(id,  email, password, user_details_id) values
+(1, 'andzej@wp.pl', '{noop}eeeee', 1),
+(2, 'justynka@wp.pl', '{noop}costam1234' , 2),
+(3,  'piotron2000@wp.pl', '{noop}niewiem' , 3),
+(4,  'jankowalski@wp.pl', '{noop}jan', 4),
+(5,  'krzyzacy@onet.pl', '{noop}zigi', 5 ),
+(6,  'andzela@gmail.com', '{noop}lili', 6);
 
 insert into category (id, name, image_url) values
 (1, 'Gady', '../img/categories/reptiles.png'),

@@ -18,19 +18,17 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
-    private String firstName;
-    @NotNull
-    private String lastName;
+
     @Column(unique = true)
     @Email
     @NotNull
     private String email;
     @NotNull
     private String password;
-    @NotNull
-    @Pattern(regexp = "[\\d]{9}")
-    private String phoneNumber;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference
+    @JoinColumn(name = "userDetails_id", referencedColumnName = "id")
+    private UserDetails userDetails;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Advertisement> advertisements  = new ArrayList<>();

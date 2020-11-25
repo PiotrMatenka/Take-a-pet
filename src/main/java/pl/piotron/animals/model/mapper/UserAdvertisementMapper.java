@@ -1,10 +1,12 @@
 package pl.piotron.animals.model.mapper;
 
+import org.springframework.stereotype.Service;
 import pl.piotron.animals.model.Advertisement;
 import pl.piotron.animals.model.User;
+import pl.piotron.animals.model.UserDetails;
 import pl.piotron.animals.model.dto.UserAdvertisementDto;
-
 public class UserAdvertisementMapper {
+
     public static UserAdvertisementDto toDto (Advertisement advertisement)
     {
         UserAdvertisementDto dto = new UserAdvertisementDto();
@@ -16,8 +18,9 @@ public class UserAdvertisementMapper {
         dto.setStart(advertisement.getStart());
         User user = advertisement.getUser();
         dto.setUserId(user.getId());
-        dto.setUserFirstName(user.getFirstName());
-        dto.setUserPhoneNumber(user.getPhoneNumber());
+        UserDetails userDetails = user.getUserDetails();
+        dto.setUserFirstName(userDetails.getFirstName());
+        dto.setUserPhoneNumber(userDetails.getPhoneNumber());
         dto.setUserEmail(user.getEmail());
         return dto;
     }
