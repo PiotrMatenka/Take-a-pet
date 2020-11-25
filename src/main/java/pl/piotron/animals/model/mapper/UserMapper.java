@@ -6,13 +6,12 @@ import pl.piotron.animals.model.User;
 import pl.piotron.animals.model.UserDetails;
 import pl.piotron.animals.model.UserRole;
 import pl.piotron.animals.model.dto.UserDto;
-import pl.piotron.animals.repositories.UserDetailsRepository;
 import pl.piotron.animals.repositories.UserRoleRepository;
 
 @Service
 public class UserMapper {
     private final UserRoleRepository userRoleRepository;
-    private PasswordEncoder encoder;
+    private final PasswordEncoder encoder;
     private static final String DEFAULT_ROLE=  "USER";
 
     public UserMapper( UserRoleRepository userRoleRepository, PasswordEncoder encoder) {
@@ -36,11 +35,7 @@ public class UserMapper {
     public User toEntity(UserDto user) {
         User entity = new User();
         entity.setId(user.getId());
-        UserDetails userDetails = new UserDetails();
-        userDetails.setId(user.getId());
-        userDetails.setFirstName(user.getFirstName());
-        userDetails.setLastName(user.getLastName());
-        userDetails.setPhoneNumber(user.getPhoneNumber());
+        UserDetails userDetails = detailsMapper(user);
         entity.setUserDetails(userDetails);
         entity.setEmail(user.getEmail());
         String password = encoder.encode(user.getPassword());
@@ -52,12 +47,7 @@ public class UserMapper {
     }
 
     public UserDetails updateUser(UserDto user) {
-        UserDetails entity = new UserDetails();
-        entity.setId(user.getId());
-        entity.setFirstName(user.getFirstName());
-        entity.setLastName(user.getLastName());
-        entity.setPhoneNumber(user.getPhoneNumber());
-        return entity;
+        return detailsMapper(user);
     }
     public UserDto updatedToDto (UserDetails user)
     {
@@ -67,6 +57,16 @@ public class UserMapper {
         dto.setLastName(user.getLastName());
         dto.setPhoneNumber(user.getPhoneNumber());
         return dto;
+    }
+
+    private UserDetails detailsMapper(UserDto user)
+    {
+        UserDetails userDetails = new UserDetails();
+        userDetails.setId(user.getId());
+        userDetails.setFirstName(user.getFirstName());
+        userDetails.setLastName(user.getLastName());
+        userDetails.setPhoneNumber(user.getPhoneNumber());
+        return userDetails;
     }
     
 }
