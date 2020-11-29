@@ -3,10 +3,8 @@ package pl.piotron.animals.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pl.piotron.animals.exceptions.ImageNotFoundException;
 import pl.piotron.animals.model.ImageStorage;
 import pl.piotron.animals.services.ImagesService;
 
@@ -28,8 +26,16 @@ public class ImageRestController {
         return imagesService.getAll();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ImageStorage> getImage(@PathVariable Long id)
+    {
+        return imagesService.getImage(id)
+                .map(ResponseEntity::ok)
+                .orElseThrow(ImageNotFoundException::new);
+    }
+
     @GetMapping(value = "/advertisement/{id}")
-    public List<String> getAllByAdvertisementId (@PathVariable Long id)
+    public List<ImageStorage> getAllByAdvertisementId (@PathVariable Long id)
     {
         return imagesService.getAllByAdvertisementId(id);
     }
@@ -39,4 +45,13 @@ public class ImageRestController {
         ImageStorage mainImage = imagesService.getMainImage(id);
         return ResponseEntity.ok(mainImage);
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('USER')")
+    public ResponseEntity<ImageStorage> removeSingleImage (@PathVariable Long id)
+    {
+        imagesService.removeSingleImage(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

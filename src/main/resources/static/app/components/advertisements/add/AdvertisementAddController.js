@@ -1,12 +1,15 @@
 angular.module('app')
-.controller('AdvertisementAddController', function ($routeParams, AdvertisementService, $location, CategoryService, Advertisement, ImagesService) {
+.controller('AdvertisementAddController', function ($routeParams, AdvertisementService, $location, CategoryService,
+                                                    Advertisement, ImagesService, $scope) {
     const vm = this;
+    $scope.submitted = false;
     const adverId = $routeParams.adverId;
     const userId = $routeParams.userId;
 
     if (adverId){
         vm.advertisement = AdvertisementService.get(adverId);
         vm.images = ImagesService.getImagesById(adverId);}
+
     else
         vm.advertisement = new Advertisement();
         vm.advertisement.userId = userId;
@@ -18,19 +21,33 @@ angular.module('app')
     };
 
     const errorCallback = err => {
-        vm.msg=`Błąd zapisu: ${err.data.message}`;
+        if (err.status == 409){
+            vm.msg=`Błąd zapisu: ${err.data.message}`;}
+        else {
+            vm.msg = 'Podano błędne dane';
+        }
     };
 
     vm.saveAdvertisement = () =>{
+        $scope.submitted = true;
         AdvertisementService.save(vm.advertisement)
             .then(saveCallback)
             .catch(errorCallback);
     };
-
+    const updateCallback = response => vm.msg='Zapisano zmiany';
     vm.updateAdvertisement = () => {
         AdvertisementService.update(vm.advertisement)
-            .then(saveCallback)
+            .then(updateCallback)
             .catch(errorCallback);
+    }
+    const removeCallback = response => vm.msg='Usunięto zdjęcie';
+    vm.removeImage = image => {
+        if (confirm('Czy na pewno chcesz usunąc zdjęcie?')){
+            ImagesService.removeImage(image)
+                .then(location.reload(),
+                    removeCallback)
+                .catch(errorCallback)
+        }
     }
 
 

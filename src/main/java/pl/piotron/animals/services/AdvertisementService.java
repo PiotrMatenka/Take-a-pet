@@ -3,6 +3,7 @@ package pl.piotron.animals.services;
 import org.springframework.stereotype.Service;
 import pl.piotron.animals.exceptions.AdvertisementNotFoundException;
 import pl.piotron.animals.exceptions.AppException;
+import pl.piotron.animals.exceptions.ImageNotFoundException;
 import pl.piotron.animals.model.Advertisement;
 import pl.piotron.animals.model.ImageStorage;
 import pl.piotron.animals.model.dto.AdvertisementDto;
@@ -53,7 +54,7 @@ public class AdvertisementService {
     {
         Optional<Advertisement> activeAdvertisement = advertisementRepository.findByTitleAndUser_Id(dto.getTitle(), dto.getUserId());
         activeAdvertisement.ifPresent(a ->{
-            throw new AppException("Ogłoszenie o podanym Id już istnieje");
+            throw new AppException("Posiadasz już ogłoszenie z identycznym tytułem");
         });
         return mapAndSave(dto);
     }
@@ -130,17 +131,20 @@ public class AdvertisementService {
     private void removeImages(Long adverId)
     {
         List<ImageStorage> images  = imageRepository.findAllByAdvertisement_Id(adverId);
-        for (ImageStorage i:images)
+        if (!images.isEmpty())
         {
-            try{
-                Files.delete(Paths.get(i.getDeleteUrl()));
-            }catch (IOException e)
+            for (ImageStorage i:images)
             {
-                e.getMessage();
+                try{
+                    Files.delete(Paths.get(i.getDeleteUrl()));
+                }catch (IOException e)
+                {
+                    e.getMessage();
+                }
             }
-        }
-        imageRepository.deleteAll(images);
-    }
+            imageRepository.deleteAll(images);
+        }else throw new ImageNotFoundException();
 
+    }
 
 }

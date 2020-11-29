@@ -11,29 +11,54 @@
         </div>
     </div>
     <div class="row">
-        <form class="mx-auto col-10 col-md-6">
+        <form class="mx-auto col-10 col-md-6" name="adverForm" ng-class="{'form-error':submitted}" ng-submit="saveAdvertisement()">
             <div class="form-group">
                 <label for="titleInput">Tytuł: </label>
-                <input type="text" id="titleInput" class="form-control" placeholder="Tytuł" ng-model="ctrl.advertisement.title">
+                <input type="text" id="titleInput" class="form-control" placeholder="Tytuł" name="title" required ng-model="ctrl.advertisement.title">
+                <div class="check" ng-show="adverForm.title.$valid">  ✓</div>
+            </div>
+            <div ng-messages="adverForm.title.$error"
+                 ng-show="submitted && adverForm.title.$invalid" class="error-messages">
+                <p ng-message="required">Prosimy podać tytuł!</p>
             </div>
             <div class="form-group">
                 <label for="categorySelect">Kategoria:</label>
-                <select  class="form-control" id="categorySelect" ng-model="ctrl.advertisement.category" >
+                <select  class="form-control" id="categorySelect" name="category" required ng-model="ctrl.advertisement.category" >
                     <option ng-repeat="category in ctrl.categories" ng-selected="category === ctrl.advertisement.category">{{category.name}}</option>
                 </select>
+                <div class="check" ng-show="adverForm.category.$valid">  ✓</div>
+            </div>
+            <div ng-messages="adverForm.category.$error"
+                 ng-show="submitted && adverForm.category.$invalid" class="error-messages">
+                <p ng-message="required">Prosimy wybrać kategorię!</p>
             </div>
             <div class="form-group">
                 <label for="cityInput">Miasto:</label>
-                <input class="form-control" type="text" id="cityInput" placeholder="miasto" ng-model="ctrl.advertisement.city">
+                <input class="form-control" type="text" id="cityInput" placeholder="miasto" name="city" required ng-model="ctrl.advertisement.city">
+                <div class="check" ng-show="adverForm.city.$valid">  ✓</div>
+            </div>
+            <div ng-messages="adverForm.city.$error"
+                 ng-show="submitted && adverForm.city.$invalid" class="error-messages">
+                <p ng-message="required">Prosimy wpisać miejscowość</p>
             </div>
             <div class="form-group">
                 <label for="descriptionInput">Opis ogłoszenia:</label>
-                <textarea class="form-control" id="descriptionInput" rows="10"
-                          placeholder="opis" ng-model="ctrl.advertisement.description"></textarea>
+                <textarea class="form-control" id="descriptionInput" rows="10" name="description"
+                          placeholder="opis" required ng-model="ctrl.advertisement.description"></textarea>
+                <div class="check" ng-show="adverForm.description.$valid">  ✓</div>
+            </div>
+            <div ng-messages="adverForm.description.$error"
+                 ng-show="submitted && adverForm.description.$invalid" class="error-messages">
+                <p ng-message="required">Prosimy wpisać opis!</p>
             </div>
             <div class="form-group">
                 <label for="priceInput">Cena: </label>
-                <input class="form-control" type="text" id="priceInput" placeholder="cena w złotówkach" ng-model="ctrl.advertisement.price">
+                <input class="form-control" type="text" id="priceInput" placeholder="cena w złotówkach" name="price" required ng-model="ctrl.advertisement.price">
+            </div>
+            <div class="check" ng-show="adverForm.price.$valid">  ✓</div>
+            <div ng-messages="adverForm.price.$error"
+                 ng-show="submitted && adverForm.price.$invalid" class="error-messages">
+                <p ng-message="required">Prosimy podać cenę!</p>
             </div>
             <div class="container">
                 <div class="row">
@@ -64,7 +89,8 @@
             <div class="row" ng-if="ctrl.advertisement.id">
                 <div ng-repeat="image in ctrl.images" class="col-md-3 offset-md-1">
                     <div class="row">
-                        <img ng-src="{{image}}" width="200" height="100" alt="brak zdjęć"/>
+                        <img ng-src="{{image.uploadUrl}}" width="200" height="100" alt="brak zdjęć"/>
+                        <button type="submit" ng-click="ctrl.removeImage(image)"><i class="fas fa-trash-alt"></i></button>
                         <br>
                     </div>
                 </div>

@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.piotron.animals.exceptions.AdvertisementNotFoundException;
-import pl.piotron.animals.exceptions.AppException;
 import pl.piotron.animals.model.dto.AdvertisementDto;
 import pl.piotron.animals.model.dto.ImageAdvertisementDto;
 import pl.piotron.animals.model.dto.UserAdvertisementDto;
@@ -67,16 +68,18 @@ public class AdvertisementController {
 
     @PreAuthorize("hasAuthority('USER')")
     @PostMapping("")
-    public ResponseEntity<AdvertisementDto> createAdvertisement(@Valid @RequestBody AdvertisementDto advertisement)
+    public ResponseEntity<AdvertisementDto> createAdvertisement(@Valid @RequestBody AdvertisementDto advertisement, BindingResult result)
     {
-        AdvertisementDto savedAdvertisement;
-        try {
-            savedAdvertisement = advertisementService.createAdvertisement(advertisement);
-        }catch (AppException e)
-        {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        if(advertisement.getId() != null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Zapisywany obiekt nie może mieć ustawionego Id");
         }
-
+        if (result.hasErrors())
+        {
+            List<ObjectError> errors = result.getAllErrors();
+            errors.forEach(err -> System.out.println(err.getDefaultMessage()));
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+        AdvertisementDto savedAdvertisement = advertisementService.createAdvertisement(advertisement);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")

@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.piotron.animals.exceptions.AppException;
 import pl.piotron.animals.exceptions.DuplicateImageException;
 import pl.piotron.animals.exceptions.FileExtensionException;
+import pl.piotron.animals.exceptions.ImageNotFoundException;
 import pl.piotron.animals.model.Advertisement;
 import pl.piotron.animals.model.ImageStorage;
 import pl.piotron.animals.repositories.AdvertisementRepository;
@@ -14,6 +15,8 @@ import pl.piotron.animals.repositories.ImageRepository;
 
 import java.awt.*;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -54,18 +57,36 @@ public class ImagesService {
         return new ArrayList<>(imageRepository.findAll());
 
     }
-    public List<String> getAllByAdvertisementId(Long advertisementId)
+    public Optional<ImageStorage> getImage(Long imageId)
     {
-        return imageRepository.findAllByAdvertisement_Id(advertisementId)
-                .stream()
-                .map(ImageStorage::getUploadUrl)
-                .collect(Collectors.toList());
+        return imageRepository.findById(imageId);
+    }
+    public List<ImageStorage> getAllByAdvertisementId(Long advertisementId)
+    {
+        return imageRepository.findAllByAdvertisement_Id(advertisementId);
+
     }
 
     public ImageStorage getMainImage(Long adverId)
     {
         return imageRepository.findFirstByAdvertisement_Id(adverId);
 
+    }
+    public void removeSingleImage (Long imageId)
+    {
+        Optional<ImageStorage> image = imageRepository.findById(imageId);
+        image.ifPresentOrElse(i -> {
+            try {
+                Files.delete(Paths.get(i.getDeleteUrl()));
+                imageRepository.delete(i);
+            }catch (IOException e)
+            {
+                e.getMessage();
+            }
+
+        }, () -> {
+            throw new ImageNotFoundException();
+        });
     }
 
     private void uploadImage(MultipartFile file, Long advertisementId)

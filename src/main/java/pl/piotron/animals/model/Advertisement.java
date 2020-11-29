@@ -18,7 +18,6 @@ public class Advertisement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @Column(unique = true)
     private String title;
     @NotNull
     @Lob
