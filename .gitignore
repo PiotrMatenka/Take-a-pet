@@ -32,3 +32,6 @@ build/
 
 # Project exclude paths
 /src/main/resources/static/node_modules/
+
+# app properties
+/src/main/resources/application.properties
