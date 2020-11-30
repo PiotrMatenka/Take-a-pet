@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import org.springframework.core.annotation.Order;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -50,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 // ignoring the "/", "/index.html", "/app/**", "/register",
                 // "/favicon.ico"
-                .antMatchers("/", "/index.html", "/h2-console/**");
+                .antMatchers("/", "/index.html", "/h2-console/**", "#!/confirmAccount");
     }
 
         @Override
@@ -66,11 +64,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                     .antMatchers("/","/api/**","/home", "/index.html", "/user-login",
                             "/app/components/**", "/node_modules/**", "/img/**", "/css/**",
-                            "/app/services/**", "/upload-dir/**", "/upload/**", "/ads/**", "/h2-console/**")
+                            "/app/services/**", "/upload-dir/**", "/upload/**", "/ads/**", "/h2-console/**",
+                            "/confirmAccount")
                     .permitAll()
                     .antMatchers("/#!/ads/new", "/#!/ads/edit", "/#!/accountView/**").fullyAuthenticated()
                     .anyRequest().authenticated()
-                    .and().formLogin().loginPage("/#!/user-login").permitAll()
+                    .and().formLogin().loginPage("/user-login").permitAll()
                     .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
 
             ;

@@ -4,6 +4,11 @@
             <p class="text-danger">{{errmsg}}</p>
         </div>
     </div>
+    <div class="row" ng-show="registerMsg">
+        <div class="mx-auto">
+            <p class="text-success">{{registerMsg}}</p>
+        </div>
+    </div>
     <div class="row">
                 <div class="col-sm-1 col-md-5">
                     <div ng-show="!ctrl.userEmail">

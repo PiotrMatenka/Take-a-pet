@@ -8,11 +8,9 @@ import pl.piotron.animals.model.User;
 import pl.piotron.animals.model.UserDetails;
 import pl.piotron.animals.model.dto.EndedAdvertisementDto;
 import pl.piotron.animals.model.dto.ImageAdvertisementDto;
-import pl.piotron.animals.model.dto.UserAdvertisementDto;
 import pl.piotron.animals.model.dto.UserDto;
 import pl.piotron.animals.model.mapper.EndedAdvertisementMapper;
 import pl.piotron.animals.model.mapper.ImageAdvertisementMapper;
-import pl.piotron.animals.model.mapper.UserAdvertisementMapper;
 import pl.piotron.animals.model.mapper.UserMapper;
 import pl.piotron.animals.repositories.UserDetailsRepository;
 import pl.piotron.animals.repositories.UserRepository;
@@ -28,7 +26,8 @@ public class UserService {
     private final ImageAdvertisementMapper imageAdvertisementMapper;
     private final UserDetailsRepository userDetailsRepository;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper, ImageAdvertisementMapper imageAdvertisementMapper, UserDetailsRepository userDetailsRepository) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, ImageAdvertisementMapper imageAdvertisementMapper,
+                       UserDetailsRepository userDetailsRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.imageAdvertisementMapper = imageAdvertisementMapper;

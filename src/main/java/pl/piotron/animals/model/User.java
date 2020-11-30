@@ -24,6 +24,8 @@ public class User {
     private String email;
     @NotNull
     private String password;
+    @Column(name = "is_enabled")
+    private boolean isEnabled;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name = "userDetails_id", referencedColumnName = "id")
@@ -36,5 +38,6 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
+
     private Set<UserRole> roles = new HashSet<UserRole>();
 }

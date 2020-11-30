@@ -14,6 +14,7 @@ import pl.piotron.animals.model.dto.EndedAdvertisementDto;
 import pl.piotron.animals.model.dto.ImageAdvertisementDto;
 import pl.piotron.animals.model.dto.UserAdvertisementDto;
 import pl.piotron.animals.model.dto.UserDto;
+import pl.piotron.animals.services.UserConfirmService;
 import pl.piotron.animals.services.UserService;
 
 import javax.validation.Valid;
@@ -24,9 +25,11 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
+    private final UserConfirmService userConfirmService;
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserConfirmService userConfirmService) {
         this.userService = userService;
+        this.userConfirmService = userConfirmService;
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -77,6 +80,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         UserDto savedUser = userService.saveUser(user);
+        userConfirmService.sendConfirmationEmail(user);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")

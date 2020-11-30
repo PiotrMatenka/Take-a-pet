@@ -29,6 +29,7 @@ public class UserMapper {
         dto.setPhoneNumber(userDetails.getPhoneNumber());
         String password = encoder.encode(user.getPassword());
         dto.setPassword(password);
+        dto.setEnabled(user.isEnabled());
         dto.setRoles(user.getRoles());
         return dto;
     }
@@ -43,6 +44,7 @@ public class UserMapper {
         UserRole defaultRole = userRoleRepository.findByRole(DEFAULT_ROLE);
         user.getRoles().add(defaultRole);
         entity.setRoles(user.getRoles());
+        entity.setEnabled(false);
         return entity;
     }
 

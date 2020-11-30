@@ -13,6 +13,7 @@ public class UserDto {
     private String phoneNumber;
     private String email;
     private String password;
+    private boolean isEnabled;
     private Set<UserRole> roles = new HashSet<>();
 
 }

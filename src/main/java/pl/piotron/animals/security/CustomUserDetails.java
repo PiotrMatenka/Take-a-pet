@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import pl.piotron.animals.exceptions.AppException;
 import pl.piotron.animals.model.User;
 import pl.piotron.animals.repositories.UserRepository;
 
@@ -12,7 +13,7 @@ import javax.transaction.Transactional;
 
 @Component
 public class CustomUserDetails implements UserDetailsService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     @Autowired
     public CustomUserDetails(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -24,6 +25,8 @@ public class CustomUserDetails implements UserDetailsService {
         User user = userRepository.findByEmail(email);
         if (user == null)
             throw new UsernameNotFoundException("User not found");
+        if (!user.isEnabled())
+            throw new AppException("Konto nieaktywne!");
 
         return new UserPrincipal(user);
     }

@@ -8,13 +8,13 @@ insert into user_details (id,first_name, last_name, phone_Number) values
 (6, 'Andżelika', 'Andżelewska', '253147895');
 
 
-insert into user(id,  email, password, user_details_id) values
-(1, 'andzej@wp.pl', '{noop}eeeee', 1),
-(2, 'justynka@wp.pl', '{noop}costam1234' , 2),
-(3,  'piotron2000@wp.pl', '{noop}niewiem' , 3),
-(4,  'jankowalski@wp.pl', '{noop}jan', 4),
-(5,  'krzyzacy@onet.pl', '{noop}zigi', 5 ),
-(6,  'andzela@gmail.com', '{noop}lili', 6);
+insert into user(id,  email, password, user_details_id, is_enabled) values
+(1, 'andzej@wp.pl', '{noop}eeeee', 1, true ),
+(2, 'justynka@wp.pl', '{noop}costam1234' , 2, true ),
+(3,  'piotron2000@wp.pl', '{noop}niewiem' , 3, true),
+(4,  'jankowalski@wp.pl', '{noop}jan', 4, true),
+(5,  'krzyzacy@onet.pl', '{noop}zigi', 5 , true),
+(6,  'andzela@gmail.com', '{noop}lili', 6, true);
 
 insert into category (id, name, image_url) values
 (1, 'Gady', '../img/categories/reptiles.png'),

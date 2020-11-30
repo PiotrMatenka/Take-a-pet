@@ -1,5 +1,5 @@
 angular.module('app')
-    .controller('UserEditController', function($routeParams, $location, $timeout, UserService, User, $scope) {
+    .controller('UserEditController', function($routeParams, $location, $timeout, UserService, User, $scope, $rootScope) {
         const vm = this;
         $scope.submitted = false;
         const userId = $routeParams.userId;
@@ -9,6 +9,7 @@ angular.module('app')
             vm.user = new User();
 
         const saveCallback = () => {
+            $rootScope.registerMsg = 'Wysłano maila z linkiem do dokończenia rejestracji';
             $location.path(`/user-login/`);
         };
         const errorCallback = err => {

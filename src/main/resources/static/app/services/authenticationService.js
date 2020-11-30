@@ -21,7 +21,6 @@ angular.module('app')
                         {
                             $rootScope.errmsg = 'Błędny email lub hasło';
                             $location.path('/user-login')
-
                         }
 
                 });

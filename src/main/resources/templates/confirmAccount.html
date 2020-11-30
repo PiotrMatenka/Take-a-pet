@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html data-ng-app="app" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Take-a-pet</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet">
+    <link rel="icon" type="image/png" th:href="@{/img/images.png}">
+</head>
+<body>
+<main role="main" class="container" >
+    <div class="jumbotron jumbo-custom text-center my-2 " >
+    </div>
+</main>
+<div class="row">
+    <div class="mx-auto">
+        <h4 style="color: darkgreen" th:text="${message}"/>
+    </div>
+
+</div>
+<div class="row">
+    <div class="mx-auto">
+        <a class="btn btn-primary" th:href="@{/user-login}">Zaloguj się</a>
+    </div>
+</div>
+</body>
+</html>

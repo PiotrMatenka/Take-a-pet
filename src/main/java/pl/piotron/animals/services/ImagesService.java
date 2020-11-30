@@ -4,7 +4,7 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import pl.piotron.animals.exceptions.AppException;
+
 import pl.piotron.animals.exceptions.DuplicateImageException;
 import pl.piotron.animals.exceptions.FileExtensionException;
 import pl.piotron.animals.exceptions.ImageNotFoundException;
@@ -13,14 +13,12 @@ import pl.piotron.animals.model.ImageStorage;
 import pl.piotron.animals.repositories.AdvertisementRepository;
 import pl.piotron.animals.repositories.ImageRepository;
 
-import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ImagesService {
@@ -33,6 +31,7 @@ public class ImagesService {
         this.imageRepository = imageRepository;
         this.advertisementRepository = advertisementRepository;
     }
+
     public void storeImage(MultipartFile file, Long advertisementId) throws DuplicateImageException
     {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -50,17 +49,18 @@ public class ImagesService {
         ImageStorage imageStorage = mapToEntity(file, advertisementId);
         uploadImage(file, advertisementId);
         imageRepository.save(imageStorage);
-
     }
+
     public List<ImageStorage> getAll ()
     {
         return new ArrayList<>(imageRepository.findAll());
-
     }
+
     public Optional<ImageStorage> getImage(Long imageId)
     {
         return imageRepository.findById(imageId);
     }
+
     public List<ImageStorage> getAllByAdvertisementId(Long advertisementId)
     {
         return imageRepository.findAllByAdvertisement_Id(advertisementId);
@@ -72,6 +72,7 @@ public class ImagesService {
         return imageRepository.findFirstByAdvertisement_Id(adverId);
 
     }
+
     public void removeSingleImage (Long imageId)
     {
         Optional<ImageStorage> image = imageRepository.findById(imageId);
