@@ -23,7 +23,7 @@
                 </div>
                 <div ng-messages="userForm.firstName.$error"
                      ng-show="submitted && userForm.firstName.$invalid" class="error-messages">
-                    <p ng-message="required">Prosimy podać imię!</p>
+                    <p ng-message="required"><i class="fas fa-exclamation-circle"></i> Prosimy podać imię!</p>
                 </div>
 
                 <div class="form-group">
@@ -35,7 +35,7 @@
                 </div>
                 <div ng-messages="userForm.lastName.$error"
                      ng-show="submitted && userForm.lastName.$invalid" class="error-messages">
-                    <p ng-message="required">Prosimy podać nazwisko!</p>
+                    <p ng-message="required"><i class="fas fa-exclamation-circle"></i> Prosimy podać nazwisko!</p>
                 </div>
                 <div class="form-group">
                     <label for="phoneNumberInput">Nr telefonu: </label>
@@ -47,8 +47,8 @@
                 </div>
                 <div ng-messages="userForm.phoneNumber.$error"
                      ng-show="submitted && userForm.phoneNumber.$invalid" class="error-messages">
-                    <p ng-message="required">Prosimy podać numer telefonu!</p>
-                    <p ng-message="pattern">Numer musi posiadać 9 cyfr</p>
+                    <p ng-message="required"><i class="fas fa-exclamation-circle"></i> Prosimy podać numer telefonu!</p>
+                    <p ng-message="pattern"><i class="fas fa-exclamation-circle"></i> Numer musi posiadać 9 cyfr</p>
                 </div>
 
                 <div class="form-group" ng-if="!ctrl.user.id">
@@ -60,20 +60,34 @@
                 </div>
                 <div ng-messages="userForm.email.$error"
                      ng-show="submitted && userForm.email.$invalid" class="error-messages">
-                    <p ng-message="email">Błędny email!</p>
-                    <p ng-message="required">Prosimy podać adres email!</p>
+                    <p ng-message="email"><i class="fas fa-exclamation-circle"></i> Błędny email!</p>
+                    <p ng-message="required"><i class="fas fa-exclamation-circle"></i> Prosimy podać adres email!</p>
                 </div>
-
                 <div class="form-group" ng-if="!ctrl.user.id">
-                    <label for="passwordInput">Hasło:</label>
+                    <label for="confirmPassword">Hasło:</label>
                     <div class="flex-container" >
-                        <input type="password" name="password" class="form-control" id="passwordInput" placeholder="hasło"  required ng-model="ctrl.user.password">
+                        <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="hasło"
+                               ng-change="passwordChanged()" minlength="6" required ng-model="registration.confirmPassword">
+                        <div class="check" ng-show="userForm.password.$valid">  ✓</div>
+                    </div>
+                </div>
+                <div ng-messages="userForm.confirmPassword.$error"
+                     ng-show="submitted && userForm.password.$invalid" class="error-messages">
+                    <p ng-message="required"><i class="fas fa-exclamation-circle"></i> Prosimy podać hasło do konta!</p>
+                    <p ng-message="minlength"><i class="fas fa-exclamation-circle"></i>Hasło musi posiadać przynajmniej 6 znaków</p>
+                </div>
+                <div class="form-group" ng-if="!ctrl.user.id">
+                    <label for="passwordInput">Powtórz hasło:</label>
+                    <div class="flex-container" >
+                        <input type="password" name="password" class="form-control" id="passwordInput" placeholder="hasło"
+                               ng-pattern="passwordRegExp" required ng-model="ctrl.user.password">
                         <div class="check" ng-show="userForm.password.$valid">  ✓</div>
                     </div>
                 </div>
                 <div ng-messages="userForm.password.$error"
                      ng-show="submitted && userForm.password.$invalid" class="error-messages">
-                    <p ng-message="required">Prosimy podać hasło do konta!</p>
+                    <p ng-message="required"><i class="fas fa-exclamation-circle"></i> Prosimy podać hasło do konta!</p>
+                    <p ng-message="pattern"><i class="fas fa-exclamation-circle"></i> Hasła muszą być identyczne</p>
                 </div>
 
                 <div class="form-group">

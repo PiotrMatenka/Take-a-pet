@@ -3,6 +3,9 @@ angular.module('app')
         const vm = this;
         $scope.submitted = false;
         const userId = $routeParams.userId;
+        $scope.registration= {
+            'confirmPassword': ''
+        };
         if(userId)
             vm.user = UserService.get(userId);
         else
@@ -33,5 +36,9 @@ angular.module('app')
             UserService.update(vm.user)
                 .then(updateCallback)
                 .catch(errorCallback);
+        };
+
+        $scope.passwordChanged = function() {
+            $scope.passwordRegExp = '^('+$scope.registration.confirmPassword+')$';
         };
     });

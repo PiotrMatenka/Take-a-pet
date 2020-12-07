@@ -1,5 +1,5 @@
 angular.module('app')
-    .controller('AuthenticationController', function($rootScope, $location, AuthenticationService, $cookies) {
+    .controller('AuthenticationController', function($rootScope, $location, AuthenticationService, $cookies, $http) {
         var vm = this;
         vm.credentials = {};
         vm.userEmail = $cookies.get("user");
@@ -21,4 +21,5 @@ angular.module('app')
         vm.logout = function() {
             AuthenticationService.logout(logoutSuccess);
         };
+
     });

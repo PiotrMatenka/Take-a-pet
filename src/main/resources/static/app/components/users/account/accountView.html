@@ -18,8 +18,9 @@
             <h5>{{ctrl.user.firstName}} {{ctrl.user.lastName}}</h5>
             <h5>{{ctrl.user.email}}</h5>
             <h5><i class="fa fa-phone" aria-hidden="true"></i> {{ctrl.user.phoneNumber}}</h5>
-            <a class="btn btn-sm btn-primary" ng-href="#!user-edit/{{ctrl.user.id}}">Edytuj</a>
+            <a class="btn btn-sm btn-primary" ng-href="#!user-edit/{{ctrl.user.id}}">Edytuj dane</a>
             <br>
+            <a class="btn btn-sm btn-danger" ng-href="#!changePassword/{{ctrl.user.id}}">Zmień hasło</a>
         </div>
         <div class="col-md-10">
             <div >
@@ -28,7 +29,7 @@
             <table class="table table-hover">
                 <tbody>
                 <tr ng-repeat="advertisement in ctrl.userAdvertisements">
-                    <td ng-if="advertisement.imageId"><img ng-srcset="{{advertisement.uploadUrl}}"  width="100" height="100" alt="brak zdjęcia"/></td>
+                    <td ng-if="advertisement.imageId"><img ng-src="{{advertisement.uploadUrl}}"  width="100" height="100" alt="brak zdjęcia"/></td>
                     <td ng-if="!advertisement.imageId"><img src="/img/no-thumb.png" width="150" height="100"></td>
                     <td>{{advertisement.title}}</td>
                     <td>{{advertisement.price}} zł</td>

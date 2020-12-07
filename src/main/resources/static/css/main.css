@@ -4,10 +4,10 @@
     height: 250px;
 }
 .form-error input.ng-invalid {
-    border-color:red;
+    border-color:darkred;
 }
 .error-messages {
-    color:red;
+    color: darkred;
 }
 .flex-container{
     display: flex;

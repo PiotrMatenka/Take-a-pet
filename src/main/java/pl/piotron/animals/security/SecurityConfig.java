@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             http
                     .httpBasic().and()
                     .logout().logoutUrl("/user-logout")
-                    .deleteCookies("user")
+                    .deleteCookies("user", "JSESSIONID")
                     .invalidateHttpSession(true)
                     .and()
                     .csrf()
@@ -65,9 +65,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/","/api/**","/home", "/index.html", "/user-login",
                             "/app/components/**", "/node_modules/**", "/img/**", "/css/**",
                             "/app/services/**", "/upload-dir/**", "/upload/**", "/ads/**", "/h2-console/**",
-                            "/confirmAccount")
+                            "/confirmAccount", "/resetPassword")
                     .permitAll()
-                    .antMatchers("/#!/ads/new", "/#!/ads/edit", "/#!/accountView/**").fullyAuthenticated()
+                    .antMatchers("/#!/ads/new", "/#!/ads/edit", "/#!/accountView/**", "/#!/changePassword").fullyAuthenticated()
                     .anyRequest().authenticated()
                     .and().formLogin().loginPage("/user-login").permitAll()
                     .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)

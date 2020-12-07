@@ -61,6 +61,16 @@ angular.module('app')
             controller: 'ArchivesController',
             controllerAs: 'ctrl'
         })
+        .when('/resetPassword', {
+            templateUrl: '/app/components/users/account/resetPassword/sendEmail/sendEmail.html',
+            controller: 'SendEmailController',
+            controllerAs: 'ctrl'
+        })
+        .when('/changePassword/:userId', {
+            templateUrl: '/app/components/users/account/resetPassword/changePassword/changePassword.html',
+            controller: 'ChangePasswordController',
+            controllerAs: 'ctrl'
+        })
         .otherwise({
             redirectTo: '/home',
         });
