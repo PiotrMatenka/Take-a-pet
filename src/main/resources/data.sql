@@ -28,14 +28,14 @@ insert into category (id, name, image_url) values
 (9, 'Trzoda i ptactwo rolnicze', '../img/categories/cow.png'  );
 
 
-insert into advertisement(id, title, description, price, city, start, end, user_id, category_id) values
-(1, 'Żółw Andżejowaty', 'Zółw chiński, egzotyczny', 80.00, 'Lublin', '2019-10-08 15:00:00', null , 3, 1),
-(2, 'kot Felek', 'kot dachowiec', 0.00, 'świdnik','2019-10-08 15:00:00', null , 2, 8),
-(3, 'jaszczur Marian', 'legwan zielony, spory', 400.00, 'Kraśnik', '2020-10-08 15:00:00', null, 5, 1 ),
-(4, 'Żółw Andżejowaty2', 'Zółw chiński, egzotyczny', 80.00, 'Lublin', '2019-10-08 15:00:00', null , 3, 1),
-(5, 'Żółw Andżejowaty3', 'Zółw chiński, egzotyczny', 80.00, 'Lublin', '2019-10-08 15:00:00', null , 3, 1),
-(6, 'Żółw Andżejowaty4', 'Zółw chiński, egzotyczny', 80.00, 'Lublin', '2019-10-08 15:00:00', null , 3, 1),
-(7, 'Żółw Andżejowaty5', 'Zółw chiński, egzotyczny', 80.00, 'Lublin', '2019-10-08 15:00:00', null , 3, 1)
+insert into advertisement(id, title, description, price, city, start, end, accept_user, accept_admin, user_id, category_id) values
+(1, 'Żółw Andżejowaty', 'Zółw chiński, egzotyczny', 80.00, 'Lublin', '2019-10-08 15:00:00',null , true, true, 3, 1),
+(2, 'kot Felek', 'kot dachowiec', 0.00, 'świdnik','2019-10-08 15:00:00', null,true, true, 2, 8),
+(3, 'jaszczur Marian', 'legwan zielony, spory', 400.00, 'Kraśnik', '2020-10-08 15:00:00', null, true, true, 5, 1 ),
+(4, 'Żółw Andżejowaty2', 'Zółw chiński, egzotyczny', 80.00, 'Lublin', '2019-10-08 15:00:00', null, true, true, 3, 1),
+(5, 'Żółw Andżejowaty3', 'Zółw chiński, egzotyczny', 80.00, 'Lublin', '2019-10-08 15:00:00', null, true, true, 3, 1),
+(6, 'Żółw Andżejowaty4', 'Zółw chiński, egzotyczny', 80.00, 'Lublin', '2019-10-08 15:00:00', null, true, true, 3, 1),
+(7, 'Żółw Andżejowaty5', 'Zółw chiński, egzotyczny', 80.00, 'Lublin', '2019-10-08 15:00:00', null, true, true, 3, 1)
 ;
 
 insert into images (id, title, upload_url, delete_url, advertisement_id) values

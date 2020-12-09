@@ -31,6 +31,8 @@ public class AdvertisementMapper {
         dto.setPrice(advertisement.getPrice());
         dto.setCity(advertisement.getCity());
         dto.setStart(advertisement.getStart());
+        dto.setAcceptedByUser(advertisement.isAcceptedByUser());
+        dto.setAcceptedByAdmin(advertisement.isAcceptedByAdmin());
         dto.setEnd(advertisement.getEnd());
         User user = advertisement.getUser();
         dto.setUserId(user.getId());
@@ -50,6 +52,8 @@ public class AdvertisementMapper {
         entity.setCity(dto.getCity());
         entity.setStart(LocalDateTime.now());
         entity.setEnd(null);
+        entity.setAcceptedByUser(false);
+        entity.setAcceptedByAdmin(false);
         Optional<User> user = userRepository.findById(dto.getUserId());
         user.ifPresent(entity::setUser);
         return entity;

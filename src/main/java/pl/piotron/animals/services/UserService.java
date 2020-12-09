@@ -6,6 +6,7 @@ import pl.piotron.animals.exceptions.DuplicateEmailException;
 import pl.piotron.animals.exceptions.UserNotFoundException;
 import pl.piotron.animals.model.User;
 import pl.piotron.animals.model.UserDetails;
+import pl.piotron.animals.model.UserRole;
 import pl.piotron.animals.model.dto.EndedAdvertisementDto;
 import pl.piotron.animals.model.dto.ImageAdvertisementDto;
 import pl.piotron.animals.model.dto.UserDto;
@@ -15,8 +16,10 @@ import pl.piotron.animals.model.mapper.UserMapper;
 import pl.piotron.animals.repositories.UserDetailsRepository;
 import pl.piotron.animals.repositories.UserRepository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -86,6 +89,17 @@ public class UserService {
                 .filter(a -> a.getEnd() != null)
                 .map(EndedAdvertisementMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    public Optional<UserRole> getAdminRole(String email)
+    {
+        Set<UserRole> userRoles = new HashSet<>(userRepository.findByEmail(email)
+                .getRoles());
+        UserRole userRole = new UserRole();
+        for (UserRole r:userRoles)
+            if (r.getRole().equals("ADMIN"))
+                userRole = r;
+        return Optional.of(userRole);
     }
 
     private UserDto mapAndSave(UserDto user)

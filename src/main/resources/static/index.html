@@ -51,7 +51,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-asset" ng-show="ctrl.userEmail">
+            <li class="nav-adver" ng-show="ctrl.userEmail">
                 <a class="nav-link" href="#!ads/new/{{ctrl.user.id}}">Dodaj ogłoszenie</a>
             </li>
             <li class="nav-login" ng-if="!ctrl.userEmail">
@@ -65,6 +65,9 @@
             </li>
             <li class="nav-account" ng-if="ctrl.userEmail">
                 <a class="nav-link" href="#!accountView/{{ctrl.user.id}}"><i class="fas fa-user-tie"></i> {{ctrl.userEmail}}</a>
+            </li>
+            <li class="nav-panel" ng-if="ctrl.userRole.id">
+                <a class="nav-link" href="#!">Panel admina</a>
             </li>
         </ul>
 

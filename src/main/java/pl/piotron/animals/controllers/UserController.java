@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.piotron.animals.exceptions.UserNotFoundException;
+import pl.piotron.animals.model.UserRole;
 import pl.piotron.animals.model.dto.EndedAdvertisementDto;
 import pl.piotron.animals.model.dto.ImageAdvertisementDto;
-import pl.piotron.animals.model.dto.UserAdvertisementDto;
 import pl.piotron.animals.model.dto.UserDto;
 import pl.piotron.animals.services.UserConfirmService;
 import pl.piotron.animals.services.UserService;
@@ -20,6 +20,7 @@ import pl.piotron.animals.services.UserService;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -52,6 +53,12 @@ public class UserController {
     public ResponseEntity<UserDto> findUserByEmail(@PathVariable String email)
     {
         return ResponseEntity.ok(userService.findByEmail(email));
+    }
+
+    @GetMapping(value = "/roles")
+    public ResponseEntity<Optional<UserRole>> getUserRole(@RequestParam String email)
+    {
+        return ResponseEntity.ok(userService.getAdminRole(email));
     }
 
     @PreAuthorize("isUser(#id) or hasAuthority('ADMIN')")

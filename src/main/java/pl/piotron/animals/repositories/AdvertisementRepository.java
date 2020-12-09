@@ -10,6 +10,8 @@ import java.util.Optional;
 
 @Repository
 public interface AdvertisementRepository extends JpaRepository<Advertisement, Long> {
+    @Query("select a from Advertisement a where lower(a.category.name)like lower(concat('%', :category, '%') )" +
+            "and a.end is null and a.isAcceptedByAdmin = true")
     List<Advertisement> findAllByCategoryName(String category);
     Optional<Advertisement> findByTitleAndUser_Id(String title, Long id);
     @Query("select a from Advertisement a where lower(a.city)like lower(concat('%', :city, '%'))")

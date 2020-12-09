@@ -27,6 +27,10 @@ public class Advertisement {
     private String city;
     private LocalDateTime start;
     private LocalDateTime end;
+    @Column(name = "accept_user")
+    private boolean isAcceptedByUser;
+    @Column(name = "accept_admin")
+    private boolean isAcceptedByAdmin;
     @ManyToOne
     @JsonManagedReference
     @JoinColumn(name = "user_id")

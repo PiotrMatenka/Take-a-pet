@@ -14,4 +14,6 @@ public class AdvertisementDto {
     private LocalDateTime start;
     private LocalDateTime end;
     private Long userId;
+    private boolean isAcceptedByUser;
+    private boolean isAcceptedByAdmin;
 }
