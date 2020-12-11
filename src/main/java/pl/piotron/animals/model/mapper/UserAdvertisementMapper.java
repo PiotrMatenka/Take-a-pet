@@ -2,26 +2,36 @@ package pl.piotron.animals.model.mapper;
 
 import org.springframework.stereotype.Service;
 import pl.piotron.animals.model.Advertisement;
+import pl.piotron.animals.model.ImageStorage;
 import pl.piotron.animals.model.User;
-import pl.piotron.animals.model.UserDetails;
 import pl.piotron.animals.model.dto.UserAdvertisementDto;
-public class UserAdvertisementMapper {
+import pl.piotron.animals.services.ImagesService;
 
-    public static UserAdvertisementDto toDto (Advertisement advertisement)
+@Service
+public class UserAdvertisementMapper {
+    private final ImagesService imagesService;
+
+    public UserAdvertisementMapper(ImagesService imagesService)
+    {
+        this.imagesService = imagesService;
+    }
+
+    public UserAdvertisementDto toDto(Advertisement advertisement)
     {
         UserAdvertisementDto dto = new UserAdvertisementDto();
-        dto.setAdvertisementId(advertisement.getId());
-        dto.setDescription(advertisement.getDescription());
-        dto.setCity(advertisement.getCity());
-        dto.setPrice(advertisement.getPrice());
+        dto.setId(advertisement.getId());
         dto.setTitle(advertisement.getTitle());
-        dto.setStart(advertisement.getStart());
+        try{
+            ImageStorage image = imagesService.getMainImage(advertisement.getId());
+            dto.setImageId(image.getId());
+            dto.setUploadUrl(image.getUploadUrl());
+        }catch (NullPointerException e)
+        {
+            e.getMessage();
+        }
         User user = advertisement.getUser();
         dto.setUserId(user.getId());
-        UserDetails userDetails = user.getUserDetails();
-        dto.setUserFirstName(userDetails.getFirstName());
-        dto.setUserPhoneNumber(userDetails.getPhoneNumber());
-        dto.setUserEmail(user.getEmail());
+        dto.setEmail(user.getEmail());
         return dto;
     }
 }

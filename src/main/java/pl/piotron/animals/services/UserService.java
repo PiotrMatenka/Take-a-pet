@@ -50,6 +50,14 @@ public class UserService {
     {
         return userRepository.findAll().stream().map(userMapper::userDto).collect(Collectors.toList());
     }
+
+    public List<UserDto> findAllByLastName(String text)
+    {
+        return userRepository.findAllByLastName(text)
+                .stream().map(userMapper::userDto)
+                .collect(Collectors.toList());
+    }
+
     public UserDto saveUser (UserDto user)
     {
         User userByEmail = userRepository.findByEmail(user.getEmail());

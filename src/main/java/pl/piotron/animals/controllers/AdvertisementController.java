@@ -12,12 +12,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.piotron.animals.exceptions.AdvertisementNotFoundException;
 import pl.piotron.animals.model.dto.AdvertisementDto;
 import pl.piotron.animals.model.dto.ImageAdvertisementDto;
-import pl.piotron.animals.model.dto.UserAdvertisementDto;
+import pl.piotron.animals.model.dto.ViewAdvertisementDto;
 import pl.piotron.animals.services.AdvertisementService;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -59,7 +58,7 @@ public class AdvertisementController {
     }
 
     @GetMapping("/view/{id}")
-    public ResponseEntity<UserAdvertisementDto> getViewById (@PathVariable Long id)
+    public ResponseEntity<ViewAdvertisementDto> getViewById (@PathVariable Long id)
     {
         return advertisementService.getViewById(id)
                 .map(ResponseEntity::ok)
@@ -86,14 +85,6 @@ public class AdvertisementController {
                 .buildAndExpand(savedAdvertisement.getId())
                 .toUri();
         return ResponseEntity.created(location).body(savedAdvertisement);
-    }
-
-    @PreAuthorize("hasAuthority('USER')")
-    @PostMapping("/{id}/end")
-    public ResponseEntity finishAdvertisement(@PathVariable Long id)
-    {
-        LocalDateTime endTime = advertisementService.finishAdvertisement(id);
-        return ResponseEntity.accepted().body(endTime);
     }
 
     @PreAuthorize("hasAuthority('USER')")

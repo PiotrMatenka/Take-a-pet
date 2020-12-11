@@ -34,8 +34,8 @@ insert into advertisement(id, title, description, price, city, start, end, accep
 (3, 'jaszczur Marian', 'legwan zielony, spory', 400.00, 'Kraśnik', '2020-10-08 15:00:00', null, true, true, 5, 1 ),
 (4, 'Żółw Andżejowaty2', 'Zółw chiński, egzotyczny', 80.00, 'Lublin', '2019-10-08 15:00:00', null, true, true, 3, 1),
 (5, 'Żółw Andżejowaty3', 'Zółw chiński, egzotyczny', 80.00, 'Lublin', '2019-10-08 15:00:00', null, true, true, 3, 1),
-(6, 'Żółw Andżejowaty4', 'Zółw chiński, egzotyczny', 80.00, 'Lublin', '2019-10-08 15:00:00', null, true, true, 3, 1),
-(7, 'Żółw Andżejowaty5', 'Zółw chiński, egzotyczny', 80.00, 'Lublin', '2019-10-08 15:00:00', null, true, true, 3, 1)
+(6, 'Żółw Andżejowaty4', 'Zółw chiński, egzotyczny', 80.00, 'Lublin', '2019-10-08 15:00:00', null, true, false, 3, 1),
+(7, 'Żółw Andżejowaty5', 'Zółw chiński, egzotyczny', 80.00, 'Lublin', '2019-10-08 15:00:00', null, true, false, 3, 1)
 ;
 
 insert into images (id, title, upload_url, delete_url, advertisement_id) values

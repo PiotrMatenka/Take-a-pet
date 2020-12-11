@@ -39,8 +39,13 @@ public class UserMapper {
         UserDetails userDetails = detailsMapper(user);
         entity.setUserDetails(userDetails);
         entity.setEmail(user.getEmail());
-        String password = encoder.encode(user.getPassword());
-        entity.setPassword(password);
+        try {
+            String password = encoder.encode(user.getPassword());
+            entity.setPassword(password);
+        }catch (IllegalArgumentException e)
+        {
+            e.getMessage();
+        }
         UserRole defaultRole = userRoleRepository.findByRole(DEFAULT_ROLE);
         user.getRoles().add(defaultRole);
         entity.setRoles(user.getRoles());

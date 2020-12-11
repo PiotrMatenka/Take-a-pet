@@ -31,7 +31,7 @@
     <script src="app/services/imagesServices.js"></script>
 
     <script src="app/components/users/userAdd/UserEditController.js"></script>
-    <script src="app/components/users/userList/UserListController.js"></script>
+    <script src="app/components/adminPanel/users/UserListController.js"></script>
     <script src="app/components/users/userLogin/authenticationController.js"></script>
     <script src="app/components/advertisements/add/AdvertisementAddController.js"></script>
     <script src="app/components/home/HomeController.js"></script>
@@ -41,6 +41,8 @@
     <script src="app/components/users/account/archiveAdvertisements/archivesController.js"></script>
     <script src="app/components/users/account/resetPassword/sendEmail/sendEmailController.js"></script>
     <script src="app/components/users/account/resetPassword/changePassword/changePasswordController.js"></script>
+    <script src="app/components/adminPanel/advertisements/pending/adsToAcceptController.js"></script>
+    <script src="app/components/adminPanel/advertisements/toCorrection/toCorrectionController.js"></script>
 </head>
 <body ng-controller="HomeController as ctrl">
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
@@ -67,7 +69,7 @@
                 <a class="nav-link" href="#!accountView/{{ctrl.user.id}}"><i class="fas fa-user-tie"></i> {{ctrl.userEmail}}</a>
             </li>
             <li class="nav-panel" ng-if="ctrl.userRole.id">
-                <a class="nav-link" href="#!">Panel admina</a>
+                <a class="nav-link" href="#!admin-panel">Panel admina</a>
             </li>
         </ul>
 

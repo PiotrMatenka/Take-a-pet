@@ -21,8 +21,8 @@ angular.module('app')
             controller: 'UserEditController',
             controllerAs: 'ctrl'
         })
-        .when('/allUsers', {
-            templateUrl: 'app/components/users/userList/userList.html',
+        .when('/admin-panel/allUsers', {
+            templateUrl: 'app/components/adminPanel/users/userList.html',
             controller: 'UserListController',
             controllerAs: 'ctrl'
         })
@@ -69,6 +69,19 @@ angular.module('app')
         .when('/changePassword/:userId', {
             templateUrl: '/app/components/users/account/resetPassword/changePassword/changePassword.html',
             controller: 'ChangePasswordController',
+            controllerAs: 'ctrl'
+        })
+        .when('/admin-panel',{
+            templateUrl: '/app/components/adminPanel/adminPanel.html'
+        })
+        .when('/admin-panel/pendingAdvertisements', {
+            templateUrl: '/app/components/adminPanel/advertisements/pending/adsToAccept.html',
+            controller: 'AdsToAcceptController',
+            controllerAs: 'ctrl'
+        })
+        .when('/admin-panel/pendingAdvertisements/toCorrection/:adverId', {
+            templateUrl: '/app/components/adminPanel/advertisements/toCorrection/toCorrection.html',
+            controller: 'ToCorrectionController',
             controllerAs: 'ctrl'
         })
         .otherwise({

@@ -3,23 +3,17 @@ package pl.piotron.animals.services;
 import org.springframework.stereotype.Service;
 import pl.piotron.animals.exceptions.AdvertisementNotFoundException;
 import pl.piotron.animals.exceptions.AppException;
-import pl.piotron.animals.exceptions.ImageNotFoundException;
 import pl.piotron.animals.model.Advertisement;
 import pl.piotron.animals.model.ImageStorage;
 import pl.piotron.animals.model.dto.AdvertisementDto;
 import pl.piotron.animals.model.dto.ImageAdvertisementDto;
-import pl.piotron.animals.model.dto.UserAdvertisementDto;
+import pl.piotron.animals.model.dto.ViewAdvertisementDto;
 import pl.piotron.animals.model.mapper.AdvertisementMapper;
 import pl.piotron.animals.model.mapper.ImageAdvertisementMapper;
-import pl.piotron.animals.model.mapper.UserAdvertisementMapper;
+import pl.piotron.animals.model.mapper.ViewAdvertisementMapper;
 import pl.piotron.animals.repositories.AdvertisementRepository;
 import pl.piotron.animals.repositories.ImageRepository;
 
-import javax.transaction.Transactional;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,7 +25,8 @@ public class AdvertisementService {
     private final AdvertisementMapper advertisementMapper;
     private final ImageRepository imageRepository;
 
-    public AdvertisementService(AdvertisementRepository advertisementRepository, ImageAdvertisementMapper imageAdvertisementMapper, AdvertisementMapper advertisementMapper, ImageRepository imageRepository) {
+    public AdvertisementService(AdvertisementRepository advertisementRepository, ImageAdvertisementMapper imageAdvertisementMapper,
+                                AdvertisementMapper advertisementMapper, ImageRepository imageRepository) {
         this.advertisementRepository = advertisementRepository;
         this.imageAdvertisementMapper = imageAdvertisementMapper;
         this.advertisementMapper = advertisementMapper;
@@ -59,17 +54,16 @@ public class AdvertisementService {
         return mapAndSave(dto);
     }
 
-    public Optional<UserAdvertisementDto> getViewById (Long adverId)
+    public Optional<ViewAdvertisementDto> getViewById (Long adverId)
     {
         return advertisementRepository.findById(adverId)
-                .map(UserAdvertisementMapper::toDto);
+                .map(ViewAdvertisementMapper::toDto);
     }
 
     public List<ImageAdvertisementDto> getAllByCategory(String category)
     {
         return advertisementRepository.findAllByCategoryName(category)
                 .stream()
-                .filter(a -> a.getEnd() == null)
                 .map(imageAdvertisementMapper::toDto)
                 .collect(Collectors.toList());
     }
@@ -77,35 +71,19 @@ public class AdvertisementService {
     {
         return advertisementRepository.findAllByCity(city)
                 .stream()
-                .filter(a -> a.getEnd() == null)
                 .map(imageAdvertisementMapper::toDto)
                 .collect(Collectors.toList());
     }
     public List<ImageAdvertisementDto> getAllByTitle (String title)
     {
         return advertisementRepository.findAllByTitle(title).stream()
-                .filter(a -> a.getEnd() == null)
                 .map(imageAdvertisementMapper::toDto)
                 .collect(Collectors.toList());
-    }
-    @Transactional
-    public LocalDateTime finishAdvertisement(Long adverId)
-    {
-        Optional<Advertisement>advertisement = advertisementRepository.findById(adverId);
-        Advertisement adverEntity = advertisement.orElseThrow(AdvertisementNotFoundException::new);
-        if (adverEntity.getEnd()!=null)
-            throw new AppException("Ogłoszenie jest już zakonczone");
-        else {
-                adverEntity.setEnd(LocalDateTime.now());
-                removeImages(adverId);}
-
-        return adverEntity.getEnd();
     }
 
     public AdvertisementDto updateAdvertisement(AdvertisementDto dto)
     {
-        Optional<Advertisement> adverById = advertisementRepository.findById(dto.getId());
-        Advertisement advertisement = adverById.orElseThrow(AdvertisementNotFoundException::new);
+        Advertisement advertisement =  checkById(dto.getId());
         return mapAndSave(dto);
     }
     public List<String> getImagesById (Long id)
@@ -120,6 +98,11 @@ public class AdvertisementService {
                 .collect(Collectors.toList());
     }
 
+    private Advertisement checkById(Long id)
+    {
+        Optional<Advertisement>advertisement = advertisementRepository.findById(id);
+        return  advertisement.orElseThrow(AdvertisementNotFoundException::new);
+    }
 
     private AdvertisementDto mapAndSave (AdvertisementDto dto)
     {
@@ -127,24 +110,4 @@ public class AdvertisementService {
         Advertisement savedAdvertisement = advertisementRepository.save(entity);
         return advertisementMapper.toDto(savedAdvertisement);
     }
-
-    private void removeImages(Long adverId)
-    {
-        List<ImageStorage> images  = imageRepository.findAllByAdvertisement_Id(adverId);
-        if (!images.isEmpty())
-        {
-            for (ImageStorage i:images)
-            {
-                try{
-                    Files.delete(Paths.get(i.getDeleteUrl()));
-                }catch (IOException e)
-                {
-                    e.getMessage();
-                }
-            }
-            imageRepository.deleteAll(images);
-        }else throw new ImageNotFoundException();
-
-    }
-
 }

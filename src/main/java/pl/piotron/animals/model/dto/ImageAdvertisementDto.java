@@ -13,5 +13,6 @@ public class ImageAdvertisementDto {
     private Long imageId;
     private String uploadUrl;
     private String city;
+    private boolean isAcceptedByAdmin;
 
 }

@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('AccountController', function ($routeParams, UserService, AdvertisementEndService, $location){
+.controller('AccountController', function ($routeParams, UserService, AdvertisementCheckService, $location){
     var vm = this;
     vm.userId = $routeParams.id ;
     vm.user = UserService.get(vm.userId);
@@ -15,7 +15,7 @@ angular.module('app')
 
     vm.finishAdvertisement = advertisement => {
         if (confirm("Czy na pewno chcesz zakończyć ogłoszenie?")) {
-            AdvertisementEndService.save(advertisement.id)
+            AdvertisementCheckService.save(advertisement.id)
                 .then(response => {
                     advertisement.end = response.data;
                     location.reload();

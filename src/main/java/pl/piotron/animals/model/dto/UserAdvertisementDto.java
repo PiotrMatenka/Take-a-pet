@@ -2,19 +2,12 @@ package pl.piotron.animals.model.dto;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
 public class UserAdvertisementDto {
-    private Long advertisementId;
+    private Long id;
     private String title;
-    private double price;
-    private String description;
-    private String city;
-    private LocalDateTime start;
+    private Long imageId;
+    private String uploadUrl;
     private Long userId;
-    private String userFirstName;
-    private String userPhoneNumber;
-    private String userEmail;
-
+    private String email;
 }

@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row">
+        <div class="mx-auto">
+            <h3>Wpisz przyczynę korekty:</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mx-auto" ng-if="ctrl.scsMsg">
+            <p style="color: darkgreen">{{ctrl.scsMsg}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mx-auto" ng-if="ctrl.errMsg">
+            <p style="color: darkred">{{ctrl.errMsg}}</p>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <form class="mx-auto col-10 col-md-6">
+            <div class="form-group">
+                <textarea class="form-control" id="messageText" name="messageText" placeholder="przyczyna" ng-model="ctrl.response.content" rows="10" >
+                </textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success" ng-click="ctrl.sendEmail(ctrl.response.content)">Wyślij email</button>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-dark" ng-href="#!admin-panel/pendingAdvertisements">Wróć do oczekujących</a>
+            </div>
+        </form>
+    </div>
+</div>

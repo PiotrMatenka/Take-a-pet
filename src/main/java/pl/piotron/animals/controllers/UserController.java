@@ -35,9 +35,12 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("")
-    public List<UserDto> getAll ()
+    public List<UserDto> getAll (@RequestParam (required = false) String text)
     {
-        return userService.findAll();
+        if (text!=null)
+            return userService.findAllByLastName(text);
+        else
+            return userService.findAll();
     }
 
     @PreAuthorize("isUser(#id) or hasAuthority('ADMIN')")

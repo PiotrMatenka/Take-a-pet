@@ -30,6 +30,7 @@ public class ImageAdvertisementMapper {
         {
             e.getMessage();
         }
+        dto.setAcceptedByAdmin(advertisement.isAcceptedByAdmin());
         return dto;
     }
 }

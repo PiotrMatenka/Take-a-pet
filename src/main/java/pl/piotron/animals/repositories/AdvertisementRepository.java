@@ -16,8 +16,12 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
     Optional<Advertisement> findByTitleAndUser_Id(String title, Long id);
     @Query("select a from Advertisement a where lower(a.city)like lower(concat('%', :city, '%'))")
     List<Advertisement> findAllByCity(String city);
-    @Query("select a from Advertisement a where lower(a.title) like lower(concat('%', :title, '%')) ")
+    @Query("select a from Advertisement a where lower(a.title)like lower(concat('%', :title, '%') )" +
+            "and a.end is null and a.isAcceptedByAdmin = true")
     List<Advertisement> findAllByTitle(String title);
+    @Query("select a from Advertisement a where a.end is null and a.isAcceptedByUser = true " +
+            "and a.isAcceptedByAdmin = false")
+    List<Advertisement> findAllAcceptedByUser();
 
 
 

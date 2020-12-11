@@ -1,8 +1,10 @@
 angular.module('app')
 .controller('AdvertisementAddController', function ($routeParams, AdvertisementService, $location, CategoryService,
-                                                    Advertisement, ImagesService, $scope) {
+                                                    Advertisement, ImagesService, $scope, AdvertisementCheckService) {
+
     const vm = this;
     $scope.submitted = false;
+    $scope.confirmed = false;
     const adverId = $routeParams.adverId;
     const userId = $routeParams.userId;
 
@@ -34,6 +36,17 @@ angular.module('app')
             .then(saveCallback)
             .catch(errorCallback);
     };
+
+    vm.acceptAdvertisement = advertisement =>{
+        if (confirm("Czy na pewno chcesz opublikować ogłoszenie?")){
+        AdvertisementCheckService.acceptByUser(advertisement.id)
+            .then(function success() {
+                $scope.confirmed = true;
+                vm.confirmMsg = 'Ogłoszenie jest w trakcie weryfikacji, otrzymasz potwierdzenie na skrzynkę mailową';
+            })
+            .catch(errorCallback);
+    }};
+
     const updateCallback = response => vm.msg='Zapisano zmiany';
     vm.updateAdvertisement = () => {
         AdvertisementService.update(vm.advertisement)
