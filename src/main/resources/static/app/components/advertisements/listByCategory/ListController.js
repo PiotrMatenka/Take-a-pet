@@ -4,4 +4,8 @@ angular.module('app')
     vm.category = $routeParams.category;
     vm.advertisements = AdvertisementService.getAllByCategory(vm.category);
 
+    vm.search = city => {
+        vm.advertisements = AdvertisementService.getAllByCategory(vm.category, {city});
+    }
+
 })

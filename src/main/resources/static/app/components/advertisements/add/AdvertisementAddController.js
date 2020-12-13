@@ -47,13 +47,13 @@ angular.module('app')
             .catch(errorCallback);
     }};
 
-    const updateCallback = response => vm.msg='Zapisano zmiany';
+    const updateCallback = () => vm.msg='Zapisano zmiany';
     vm.updateAdvertisement = () => {
         AdvertisementService.update(vm.advertisement)
             .then(updateCallback)
             .catch(errorCallback);
     }
-    const removeCallback = response => vm.msg='Usunięto zdjęcie';
+    const removeCallback = () => vm.msg='Usunięto zdjęcie';
     vm.removeImage = image => {
         if (confirm('Czy na pewno chcesz usunąc zdjęcie?')){
             ImagesService.removeImage(image)

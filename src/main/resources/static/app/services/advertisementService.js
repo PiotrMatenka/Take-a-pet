@@ -12,7 +12,8 @@ angular.module('app')
         getAllByCategory:{
             method: 'GET',
             url: ADS_BY_CATEGORY,
-            params: {category: '@category'},
+            params: {category: '@category',
+                        city: '@city'},
             isArray: true
         },
         getViewById: {
@@ -31,7 +32,7 @@ angular.module('app')
         this.save = advertisement => advertisement.$save();
         this.update = advertisement => advertisement.$update({id: advertisement.id});
         this.get = index => Advertisement.get({id: index});
-        this.getAllByCategory = index => Advertisement.getAllByCategory({category: index});
+        this.getAllByCategory = (index, city) => Advertisement.getAllByCategory({category: index}, city);
         this.getViewById = index => Advertisement.getViewById({id: index});
         this.getAcceptedByUser = () => Advertisement.getAcceptedByUser();
 })

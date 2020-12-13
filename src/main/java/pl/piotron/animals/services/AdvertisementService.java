@@ -67,9 +67,9 @@ public class AdvertisementService {
                 .map(imageAdvertisementMapper::toDto)
                 .collect(Collectors.toList());
     }
-    public List<ImageAdvertisementDto> getAllByCity (String city)
+    public List<ImageAdvertisementDto> getAllByCity (String category, String city)
     {
-        return advertisementRepository.findAllByCity(city)
+        return advertisementRepository.findAllByCity(category,city)
                 .stream()
                 .map(imageAdvertisementMapper::toDto)
                 .collect(Collectors.toList());

@@ -52,10 +52,15 @@ public class AdvertisementController {
     }
 
     @GetMapping("/findByCategory/{category}")
-    public List<ImageAdvertisementDto> getAllByCategory (@PathVariable String category)
+    public List<ImageAdvertisementDto> getAllByCategory (@PathVariable String category, @RequestParam(required = false) String city)
     {
-        return advertisementService.getAllByCategory(category);
+        if (city != null)
+            return advertisementService.getAllByCity(category, city);
+        else
+            return advertisementService.getAllByCategory(category);
     }
+
+
 
     @GetMapping("/view/{id}")
     public ResponseEntity<ViewAdvertisementDto> getViewById (@PathVariable Long id)

@@ -1,6 +1,6 @@
 angular.module('app')
 .controller("ToCorrectionController", function ($http, $routeParams, AdvertisementService){
-    var vm = this;
+    const vm = this;
     const advertisementId = $routeParams.adverId;
     vm.advertisement = AdvertisementService.get(advertisementId);
     vm.sendEmail = function (response){
