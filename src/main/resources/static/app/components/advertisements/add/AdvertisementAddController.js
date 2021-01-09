@@ -1,17 +1,25 @@
 angular.module('app')
 .controller('AdvertisementAddController', function ($routeParams, AdvertisementService, $location, CategoryService,
-                                                    Advertisement, ImagesService, $scope, AdvertisementCheckService) {
+                                                    Advertisement, ImagesService, $scope, AdvertisementCheckService,
+                                                    $cookies, UserService) {
+
 
     const vm = this;
     $scope.submitted = false;
     $scope.confirmed = false;
+    vm.user = false;
     const adverId = $routeParams.adverId;
     const userId = $routeParams.userId;
 
+
+
+
     if (adverId){
         vm.advertisement = AdvertisementService.get(adverId);
-        vm.images = ImagesService.getImagesById(adverId);}
-
+        vm.images = ImagesService.getImagesById(adverId);
+        vm.userCookie = $cookies.get("user");
+        vm.userByEmail = UserService.getByEmail(vm.userCookie);
+    }
     else
         vm.advertisement = new Advertisement();
         vm.advertisement.userId = userId;

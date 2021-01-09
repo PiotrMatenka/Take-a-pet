@@ -40,4 +40,5 @@ public class User {
     )
 
     private Set<UserRole> roles = new HashSet<UserRole>();
+
 }

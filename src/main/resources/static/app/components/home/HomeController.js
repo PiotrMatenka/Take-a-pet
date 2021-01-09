@@ -1,5 +1,5 @@
 angular.module('app')
-.controller("HomeController", function (CategoryService, AdvertisementService, $cookies, UserService, $http){
+.controller("HomeController", function (CategoryService, AdvertisementService, $cookies, UserService){
     const vm = this;
 
     if ($cookies.get("user"))

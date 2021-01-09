@@ -72,7 +72,7 @@ public class AdvertisementController {
 
     @PreAuthorize("hasAuthority('USER')")
     @PostMapping("")
-    public ResponseEntity<AdvertisementDto> createAdvertisement(@Valid @RequestBody AdvertisementDto advertisement, BindingResult result)
+    public ResponseEntity<AdvertisementDto> createAdvertisement(@Valid @RequestBody AdvertisementDto advertisement, @PathVariable Long userId, BindingResult result)
     {
         if(advertisement.getId() != null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Zapisywany obiekt nie może mieć ustawionego Id");

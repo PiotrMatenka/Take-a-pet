@@ -15,6 +15,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import pl.piotron.animals.repositories.UserRepository;
 
@@ -37,6 +38,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             return passwordEncoder;
         }
 
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new CustomAccessDeniedHandler();
+    }
+
         @Override
         public UserDetailsService userDetailsServiceBean() throws Exception {
             return new CustomUserDetails(userRepository);
@@ -46,8 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
 
         web.ignoring()
-                // ignoring the "/", "/index.html", "/app/**", "/register",
-                // "/favicon.ico"
                 .antMatchers("/", "/index.html", "/h2-console/**", "#!/confirmAccount");
     }
 
@@ -64,13 +68,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                     .antMatchers("/","/api/**","/home", "/index.html", "/user-login",
                             "/app/components/**", "/node_modules/**", "/img/**", "/css/**",
-                            "/app/services/**", "/upload-dir/**", "/upload/**", "/ads/**", "/h2-console/**",
+                            "/app/services/**", "/upload-dir/**","/ads/**", "/h2-console/**",
                             "/confirmAccount", "/resetPassword")
                     .permitAll()
-                    .antMatchers("/#!/ads/new", "/#!/ads/edit", "/#!/accountView/**", "/#!/changePassword").fullyAuthenticated()
+                    .antMatchers("/#!/ads/new", "/#!/ads/edit", "/#!/accountView/**", "/#!/changePassword"
+                    ,"/upload").fullyAuthenticated()
                     .anyRequest().authenticated()
                     .and().formLogin().loginPage("/user-login").permitAll()
                     .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                    .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler())
 
             ;
         }

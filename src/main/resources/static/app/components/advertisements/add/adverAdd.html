@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container"  >
     <div class="row">
         <div class="mx-auto">
-            <h2 ng-if="ctrl.advertisement.id">Edycja zlecenia</h2>
-            <h2 ng-if="!ctrl.advertisement.id">Nowe zlecenie</h2>
+            <h2 ng-if="ctrl.advertisement.id">Edycja ogłoszenia </h2>
+            <h2 ng-if="!ctrl.advertisement.id">Nowe ogłoszenie </h2>
         </div>
     </div>
     <div class="row" ng-if="ctrl.msg">
@@ -10,7 +10,7 @@
             <p class="text-danger">{{ctrl.msg}}</p>
         </div>
     </div>
-    <div class="row">
+    <div class="row" ng-if="ctrl.userByEmail.id === ctrl.advertisement.userId">
         <form class="mx-auto col-10 col-md-6" name="adverForm" ng-class="{'form-error':submitted}" ng-submit="saveAdvertisement()">
             <div class="form-group">
                 <label for="titleInput">Tytuł: </label>
@@ -72,7 +72,7 @@
                     </div>
                     <div >
                         <div class="mx-auto" ng-if="ctrl.advertisement.id">
-                            <a class="btn btn-success mb-3" href="/upload/{{ctrl.advertisement.id}}">Dodaj zdjęcia</a>
+                            <a class="btn btn-success mb-3" href="/upload/{{ctrl.advertisement.userId}}/{{ctrl.advertisement.id}}">Dodaj zdjęcia</a>
                         </div>
                     </div>
                     <div >

@@ -43,6 +43,9 @@ public class UserService {
 
     public UserDto findByEmail (String email)
     {
+        if (email==null)
+            throw new UserNotFoundException();
+
         return userMapper.userDto(userRepository.findByEmail(email));
     }
 
