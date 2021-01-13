@@ -21,3 +21,10 @@ Dodatkowe funkcjonalności:
 - rejestracja ( wysyłany automatycznie email weryfikujący)
 - logowanie
 - filtrowanie ogłoszeń
+
+Wykorzystane technologie:
+- Spring
+- AngularJS
+- HTML5
+- Bootstrap
+- Baza danych H2
