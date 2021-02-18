@@ -11,9 +11,6 @@ angular.module('app')
     const adverId = $routeParams.adverId;
     const userId = $routeParams.userId;
 
-
-
-
     if (adverId){
         vm.advertisement = AdvertisementService.get(adverId);
         vm.images = ImagesService.getImagesById(adverId);

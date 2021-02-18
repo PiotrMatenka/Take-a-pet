@@ -7,7 +7,7 @@ angular.module('app')
             controllerAs: 'ctrl'
         })
         .when('/ads/edit/:adverId', {
-            templateUrl: 'app/components/advertisements/add/adverAdd.html',
+            templateUrl: 'app/components/advertisements/add/adverEdit.html',
             controller: 'AdvertisementAddController',
             controllerAs: 'ctrl'
         })

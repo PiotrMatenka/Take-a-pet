@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-md-8 mx-auto">
                 <h3>Dodaj zdjęcia zwierzaka (pierwsze będzie głównym) </h3>
-                <form method="post" th:action="@{/upload/{id} (id = ${advertisementId})}"  enctype="multipart/form-data">
+                <form method="post" th:action="@{/upload/{id}/{adverId} (id = ${userId} ,adverId = ${advertisementId})}"  enctype="multipart/form-data">
                     <div class="form-group">
                         <input type="file" name="file" class="form-control-file">
                     </div>
