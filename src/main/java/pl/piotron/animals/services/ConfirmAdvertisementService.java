@@ -50,7 +50,7 @@ public class ConfirmAdvertisementService {
     {
         Advertisement adverEntity = checkById(id);
         if (adverEntity.getEnd()!=null)
-            throw new AppException("Ogłoszenie jest już zakonczone");
+            throw new AppException("Ogłoszenie jest już zakończone");
         else {
             adverEntity.setAcceptedByUser(true);
         }
@@ -62,11 +62,11 @@ public class ConfirmAdvertisementService {
     {
         Advertisement adverEntity = checkById(id);
         if (adverEntity.getEnd()!=null)
-            throw new AppException("Ogłoszenie jest już zakonczone");
+            throw new AppException("Ogłoszenie jest już zakończone");
         else {
             adverEntity.setAcceptedByAdmin(true);
+            sendAcceptEmail(adverEntity);
         }
-        sendAcceptEmail(id);
         return adverEntity.isAcceptedByAdmin();
     }
 
@@ -75,7 +75,7 @@ public class ConfirmAdvertisementService {
     {
         Advertisement adverEntity = checkById(adverId);
         if (adverEntity.getEnd()!=null)
-            throw new AppException("Ogłoszenie jest już zakonczone");
+            throw new AppException("Ogłoszenie jest już zakończone");
         else {
             adverEntity.setEnd(LocalDateTime.now());
             removeImages(adverId);}
@@ -104,10 +104,8 @@ public class ConfirmAdvertisementService {
         return emailResponse;
     }
 
-    private void sendAcceptEmail(Long id)
+    void sendAcceptEmail(Advertisement advertisement)
     {
-        Advertisement advertisement = checkById(id);
-
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(advertisement.getUser().getEmail());
         mailMessage.setSubject("Potwierdzenie wystawienia ogłoszenia.");
@@ -119,13 +117,13 @@ public class ConfirmAdvertisementService {
         emailSenderService.sendEmail(mailMessage);
     }
 
-    private Advertisement checkById(Long id)
+     Advertisement checkById(Long id)
     {
         Optional<Advertisement> advertisement = advertisementRepository.findById(id);
         return  advertisement.orElseThrow(AdvertisementNotFoundException::new);
     }
 
-    private void removeImages(Long adverId)
+     void removeImages(Long adverId)
     {
         List<ImageStorage> images  = imageRepository.findAllByAdvertisement_Id(adverId);
 
