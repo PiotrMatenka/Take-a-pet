@@ -73,15 +73,15 @@ public class UserConfirmService {
 
     public UserDto setNewPassword (Long userId, String password)
     {
-        Optional<User>user = userRepository.findById(userId);
-        User userById = user.orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         String passwordEncoded = passwordEncoder.encode(password);
-        userById.setPassword(passwordEncoded);
-        userRepository.save(userById);
-        return userMapper.userDto(userById);
+        user.setPassword(passwordEncoded);
+        userRepository.save(user);
+        return userMapper.userDto(user);
     }
 
-    private UserDto resetPassword (String confirmToken)
+
+    UserDto resetPassword (String confirmToken)
     {
         User user = checkToken(confirmToken);
         String password = passwordEncoder.encode(confirmToken);
@@ -90,7 +90,7 @@ public class UserConfirmService {
         return userMapper.userDto(savedUser);
     }
 
-    private ConfirmationToken generateToken (UserDto user)
+    ConfirmationToken generateToken (UserDto user)
     {
         User userByEmail = userRepository.findByEmail(user.getEmail());
         if (userByEmail == null)
@@ -103,7 +103,7 @@ public class UserConfirmService {
         }
     }
 
-    private ConfirmationToken generateToken (String email)
+    ConfirmationToken generateToken (String email)
     {
         User userByEmail = userRepository.findByEmail(email);
         if (userByEmail == null)
@@ -116,14 +116,12 @@ public class UserConfirmService {
         }
     }
 
-    private User checkToken (String confirmToken)
+    User checkToken (String confirmToken)
     {
         ConfirmationToken confirmationToken = confirmationTokenRepository.findByConfirmationToken(confirmToken);
         if (confirmationToken == null)
             throw new AppException("Token nie może być pusty");
-
-        User user = userRepository.findByEmail(confirmationToken.getUser().getEmail());
-        return user;
+        return userRepository.findByEmail(confirmationToken.getUser().getEmail());
     }
 
 }

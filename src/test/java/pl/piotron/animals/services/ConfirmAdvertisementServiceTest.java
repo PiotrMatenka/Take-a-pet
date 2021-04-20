@@ -26,13 +26,6 @@ class ConfirmAdvertisementServiceTest {
     private AdvertisementRepository advertisementRepository;
     @Mock
     private ImageRepository imageRepository;
-    @Mock
-    private UserAdvertisementMapper userAdvertisementMapper;
-    @Mock
-    private EmailSenderService emailSenderService;
-    @Captor
-    private ArgumentCaptor<SimpleMailMessage> simpleMailMessageArgumentCaptor;
-
     private Advertisement advertisement;
     @InjectMocks ConfirmAdvertisementService confirmAdvertisementService;
 

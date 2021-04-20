@@ -104,7 +104,7 @@ public class AdvertisementService {
         return  advertisement.orElseThrow(AdvertisementNotFoundException::new);
     }
 
-    private AdvertisementDto mapAndSave (AdvertisementDto dto)
+    AdvertisementDto mapAndSave (AdvertisementDto dto)
     {
         Advertisement entity = advertisementMapper.toEntity(dto);
         Advertisement savedAdvertisement = advertisementRepository.save(entity);
