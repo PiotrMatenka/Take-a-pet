@@ -28,3 +28,4 @@ Wykorzystane technologie:
 - HTML5
 - Bootstrap
 - Baza danych H2
+![strona główna](https://user-images.githubusercontent.com/45732522/115529077-e40e4f00-a292-11eb-853e-ed1054e149e1.PNG)
